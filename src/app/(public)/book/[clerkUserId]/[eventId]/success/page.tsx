@@ -8,6 +8,7 @@ import {
 import { db } from "@/drizzle/db"
 import { formatDateTime } from "@/lib/formatters"
 import { clerkClient } from "@clerk/nextjs/server"
+import { CircleCheck } from "lucide-react"
 import { notFound } from "next/navigation"
 
 export const revalidate = 0
@@ -30,8 +31,13 @@ export default async function SuccessPage({
     const startTimeDate = new Date(startTime)
 
     return (
-        <Card className="max-w-xl mx-auto">
+        <Card className="max-w-xl mx-auto text-center">
             <CardHeader>
+                <div className="flex justify-center mb-2">
+                    <CardTitle>
+                        <CircleCheck color="#009A51" size={52} />
+                    </CardTitle>
+                </div>
                 <CardTitle>
                     Successfully Booked {event.name} with {calendarUser.fullName}
                 </CardTitle>

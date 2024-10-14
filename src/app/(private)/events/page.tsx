@@ -38,15 +38,16 @@ export default async function EventsPage() {
                     ))}
                 </div>
             ) : (
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center justify-center text-center gap-4 min-h-[60vh]">
                     <CalendarRange className="size-16 mx-auto" />
-                    You do not any events yet. Create your first event to get started!
+                    You do not have any events yet. Create your first event to get started!
                     <Button size="lg" className="text-lg" asChild>
                         <Link href="/events/new">
                             <CalendarPlus className="mr-4 size-6" /> New Events
                         </Link>
                     </Button>
                 </div>
+
             )}
         </>
     )
