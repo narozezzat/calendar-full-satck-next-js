@@ -13,7 +13,7 @@ import {
 } from "../ui/form"
 import { Button } from "../ui/button"
 import { DAYS_OF_WEEK_IN_ORDER } from "@/data/constants"
-import { timeToInt } from "@/lib/utils"
+import { groupBy, timeToInt } from "@/lib/utils"
 import {
     Select,
     SelectContent,
@@ -60,7 +60,7 @@ export function ScheduleForm({
         fields: availabilityFields,
     } = useFieldArray({ name: "availabilities", control: form.control })
 
-    const groupedAvailabilityFields = Object.groupBy(
+    const groupedAvailabilityFields = groupBy(
         availabilityFields.map((field, index) => ({ ...field, index })),
         availability => availability.dayOfWeek
     )
@@ -89,7 +89,7 @@ export function ScheduleForm({
                     </div>
                 )}
                 {successMessage && (
-                    <div className="text-green-500 text-sm">{successMessage}</div>
+                    <div className="text-center text-green-500 text-sm">{successMessage}</div>
                 )}
                 <FormField
                     control={form.control}

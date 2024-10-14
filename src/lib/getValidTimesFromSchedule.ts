@@ -17,6 +17,7 @@ import {
   setMinutes,
 } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
+import { groupBy } from "./utils";
 
 export async function getValidTimesFromSchedule(
   timesInOrder: Date[],
@@ -127,15 +128,4 @@ function getAvailabilities(
 
     return { start, end };
   });
-}
-
-function groupBy<T>(array: T[], getKey: (item: T) => string | number) {
-  return array.reduce((acc, item) => {
-    const key = getKey(item);
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(item);
-    return acc;
-  }, {} as Record<string | number, T[]>);
 }
