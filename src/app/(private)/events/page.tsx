@@ -32,7 +32,7 @@ export default async function EventsPage() {
                 </Button>
             </div>
             {events.length > 0 ? (
-                <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {events.map(event => (
                         <EventCard key={event.id} {...event} />
                     ))}
