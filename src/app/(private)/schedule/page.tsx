@@ -1,4 +1,3 @@
-import { EventForm } from "@/components/forms/EventForm"
 import { ScheduleForm } from "@/components/forms/ScheduleForm"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { db } from "@/drizzle/db"
