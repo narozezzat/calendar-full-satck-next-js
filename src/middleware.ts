@@ -21,7 +21,7 @@ export default clerkMiddleware((auth, req) => {
   }
 
   return intlMiddleware(req);
-}, { debug: true });
+});
 
 export const config = {
   matcher: [

@@ -134,21 +134,3 @@
   50% { opacity: 1; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
 }
 
-/* RTL Support */
-[dir="rtl"] {
-  text-align: right;
-}
-
-[dir="rtl"] .hover-card-glow:hover {
-  transform: translateY(-3px);
-}
-
-[dir="rtl"] .animate-float {
-  animation: float-rtl 6s ease-in-out infinite;
-}
-
-@keyframes float-rtl {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}

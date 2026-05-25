@@ -114,7 +114,11 @@
     "saveButton": "Save Schedule",
     "saving": "Saving...",
     "successMessage": "Schedule saved successfully!",
-    "errorMessage": "There was an error saving your schedule"
+    "errorMessage": "There was an error saving your schedule",
+    "addSlotAria": "Add slot for {day}",
+    "removeSlotAria": "Remove slot {index} for {day}",
+    "startTimeAria": "{day} start time {index}",
+    "endTimeAria": "{day} end time {index}"
   },
   "days": {
     "monday": "MON",

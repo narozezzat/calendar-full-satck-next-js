@@ -4,10 +4,14 @@ import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import * as React from "react";
+
+export function generateStaticParams(): Array<{ locale: string }> {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -34,6 +38,8 @@ export default async function LocaleLayout({
   if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
     notFound();
   }
+
+  setRequestLocale(locale);
 
   const messages = await getMessages();
   const direction = locale === "ar" ? "rtl" : "ltr";

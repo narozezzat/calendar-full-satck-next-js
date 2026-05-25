@@ -53,7 +53,6 @@ export function EventForm({ event }: {
         if (data?.error) {
             form.setError("root", {
                 message: t("errorCreate"),
-                type: "error"
             })
         }
     }

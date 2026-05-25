@@ -114,7 +114,11 @@
     "saveButton": "حفظ الجدول",
     "saving": "جاري الحفظ...",
     "successMessage": "تم حفظ الجدول بنجاح!",
-    "errorMessage": "حدث خطأ أثناء حفظ جدولك"
+    "errorMessage": "حدث خطأ أثناء حفظ جدولك",
+    "addSlotAria": "إضافة فترة ليوم {day}",
+    "removeSlotAria": "إزالة الفترة {index} ليوم {day}",
+    "startTimeAria": "وقت بدء {day} رقم {index}",
+    "endTimeAria": "وقت انتهاء {day} رقم {index}"
   },
   "days": {
     "monday": "الإثنين",
@@ -158,6 +162,6 @@
   "language": {
     "switchLabel": "تبديل اللغة",
     "en": "EN",
-    "ar": "عر"
+    "ar": "AR"
   }
 }

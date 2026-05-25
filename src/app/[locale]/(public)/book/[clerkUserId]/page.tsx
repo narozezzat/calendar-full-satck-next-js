@@ -21,9 +21,11 @@ export default async function BookingPage({ params: {
 
     if (events.length === 0) return notFound()
 
-    const { fullName, imageUrl } = await clerkClient().users.getUser(clerkUserId)
-    const t = await getTranslations("booking")
-    const tc = await getTranslations("common")
+    const [{ fullName, imageUrl }, t, tc] = await Promise.all([
+        clerkClient().users.getUser(clerkUserId),
+        getTranslations("booking"),
+        getTranslations("common"),
+    ])
 
     const initials = (fullName ?? "?")
         .split(" ")

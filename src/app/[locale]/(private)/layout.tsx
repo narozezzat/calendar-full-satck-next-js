@@ -9,8 +9,10 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { getTranslations } from "next-intl/server";
 
 export default async function PrivateLayout({ children }: { children: ReactNode }): Promise<React.JSX.Element> {
-    const t = await getTranslations("nav");
-    const tc = await getTranslations("common");
+    const [t, tc] = await Promise.all([
+        getTranslations("nav"),
+        getTranslations("common"),
+    ]);
 
     return (
         <div className="flex flex-col flex-1 min-h-0">

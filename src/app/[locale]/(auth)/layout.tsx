@@ -15,8 +15,10 @@ export default async function AuthLayout({ children }: { children: ReactNode }):
     redirect({ href: "/", locale });
   }
 
-  const t = await getTranslations("auth");
-  const tc = await getTranslations("common");
+  const [t, tc] = await Promise.all([
+    getTranslations("auth"),
+    getTranslations("common"),
+  ]);
 
   return (
     <div className="flex-1 overflow-y-auto w-full grid grid-cols-1 lg:grid-cols-12 relative">

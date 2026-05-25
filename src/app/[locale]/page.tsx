@@ -17,8 +17,10 @@ export default async function HomePage(): Promise<React.JSX.Element> {
     redirect({ href: "/events", locale });
   }
 
-  const t = await getTranslations("landing");
-  const tc = await getTranslations("common");
+  const [t, tc] = await Promise.all([
+    getTranslations("landing"),
+    getTranslations("common"),
+  ]);
 
   return (
     <div className="flex-1 overflow-y-auto flex flex-col justify-between">

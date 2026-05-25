@@ -155,7 +155,7 @@ export function ScheduleForm({
                                                     endTime: "17:00",
                                                 })
                                             }}
-                                            aria-label={`Add slot for ${dayOfWeek}`}
+                                            aria-label={t("addSlotAria", { day: tDays(dayOfWeek) })}
                                         >
                                             <Plus aria-hidden="true" className="size-4.5" />
                                         </Button>
@@ -182,7 +182,7 @@ export function ScheduleForm({
                                                                         <Input
                                                                             className="w-24 h-9 text-center bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 text-sm font-medium"
                                                                             placeholder="09:00"
-                                                                            aria-label={`${dayOfWeek} Start Time ${labelIndex + 1}`}
+                                                                            aria-label={t("startTimeAria", { day: tDays(dayOfWeek), index: labelIndex + 1 })}
                                                                             {...field}
                                                                         />
                                                                     </FormControl>
@@ -199,7 +199,7 @@ export function ScheduleForm({
                                                                         <Input
                                                                             className="w-24 h-9 text-center bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 text-sm font-medium"
                                                                             placeholder="17:00"
-                                                                            aria-label={`${dayOfWeek} End Time ${labelIndex + 1}`}
+                                                                            aria-label={t("endTimeAria", { day: tDays(dayOfWeek), index: labelIndex + 1 })}
                                                                             {...field}
                                                                         />
                                                                     </FormControl>
@@ -212,7 +212,7 @@ export function ScheduleForm({
                                                             variant="destructiveGhost"
                                                             className="size-8 rounded-lg border border-destructive/20 bg-destructive/15 hover:bg-destructive hover:text-destructive-foreground text-destructive transition-all"
                                                             onClick={() => removeAvailability(field.index)}
-                                                            aria-label={`Remove slot ${labelIndex + 1} for ${dayOfWeek}`}
+                                                            aria-label={t("removeSlotAria", { index: labelIndex + 1, day: tDays(dayOfWeek) })}
                                                         >
                                                             <X aria-hidden="true" className="size-3.5" />
                                                         </Button>
