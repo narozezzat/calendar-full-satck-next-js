@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "@/i18n/routing";
-import { CalendarRange, Sparkles, CheckCircle2, Clock, Calendar, ArrowRight } from "lucide-react";
+import { CalendarRange, Sparkles, CheckCircle2, Clock, Calendar, ArrowRight, LogIn } from "lucide-react";
 import * as React from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -23,26 +23,44 @@ export default async function HomePage(): Promise<React.JSX.Element> {
   ]);
 
   return (
-    <div className="flex-1 overflow-y-auto flex flex-col justify-between">
+    <div className="flex-1 flex flex-col min-h-0">
       {/* Landing Page Navbar */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2.5 font-bold text-xl tracking-tight">
-            <div className="bg-primary/10 p-2 rounded-lg text-primary border border-primary/20 shadow-sm shadow-primary/10">
-              <CalendarRange aria-hidden="true" className="size-5" />
+      <header className="shrink-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+        <div className="container flex h-14 sm:h-16 items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-2.5 font-bold text-lg sm:text-xl tracking-tight min-w-0">
+            <div className="bg-primary/10 p-1.5 sm:p-2 rounded-lg text-primary border border-primary/20 shadow-sm shadow-primary/10 shrink-0">
+              <CalendarRange aria-hidden="true" className="size-4 sm:size-5" />
             </div>
-            <span>{tc("appName")}</span>
+            <span className="truncate">{tc("appName")}</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <LanguageSwitcher />
             <ThemeToggle />
             <SignInButton mode="modal">
-              <Button variant="ghost" className="text-sm font-medium hover:bg-primary/5 hover:text-primary">
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label={tc("signIn")}
+                className="hidden sm:inline-flex text-sm font-medium hover:bg-primary/5 hover:text-primary"
+              >
                 {tc("signIn")}
               </Button>
             </SignInButton>
+            <SignInButton mode="modal">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={tc("signIn")}
+                className="sm:hidden h-9 w-9 rounded-full border border-border/40 bg-secondary/15 hover:bg-secondary/40 hover:text-primary"
+              >
+                <LogIn aria-hidden="true" className="size-4" />
+              </Button>
+            </SignInButton>
             <SignUpButton mode="modal">
-              <Button size="sm" className="shadow-lg shadow-primary/20 font-semibold bg-primary hover:bg-primary/95 text-primary-foreground">
+              <Button
+                size="sm"
+                className="shadow-lg shadow-primary/20 font-semibold bg-primary hover:bg-primary/95 text-primary-foreground px-3 sm:px-4 text-xs sm:text-sm whitespace-nowrap"
+              >
                 {tc("getStarted")}
               </Button>
             </SignUpButton>
@@ -51,7 +69,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 flex items-center">
+      <main className="flex-1 overflow-y-auto lg:flex lg:items-center">
         <div className="container py-12 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Text */}
           <div className="lg:col-span-7 flex flex-col space-y-6 text-start">
@@ -59,9 +77,9 @@ export default async function HomePage(): Promise<React.JSX.Element> {
               <Sparkles aria-hidden="true" className="size-3.5" />
               <span>{t("badge")}</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] rtl:leading-[1.3] text-foreground">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.4] text-foreground">
               {t("heroTitle1")}<br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-400 to-indigo-500 rtl:inline-block rtl:mt-3">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-400 to-indigo-500 inline-block mt-3 pb-2">
                 {t("heroTitle2")}
               </span>
             </h1>
@@ -146,7 +164,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
       </main>
 
       {/* Footer */}
-      <footer className="py-6 border-t border-border/40 bg-background/50">
+      <footer className="shrink-0 py-6 border-t border-border/40 bg-background/50">
         <div className="container flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
           <p>{t("footer.copyright", { year: new Date().getFullYear() })}</p>
           <div className="flex gap-4">
