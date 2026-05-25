@@ -4,6 +4,7 @@ import { CalendarRange } from "lucide-react";
 import * as React from "react";
 import { ReactNode } from "react";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function PrivateLayout({ children }: { children: ReactNode }): React.JSX.Element {
     return (
@@ -26,8 +27,9 @@ export default function PrivateLayout({ children }: { children: ReactNode }): Re
                         <NavLink href="/schedule">Schedule</NavLink>
                     </nav>
 
-                    {/* Profile Button */}
-                    <div className="flex items-center gap-4">
+                    {/* Profile & Theme Actions */}
+                    <div className="flex items-center gap-3">
+                        <ThemeToggle />
                         <div className="size-9 rounded-full ring-2 ring-primary/20 hover:ring-primary/40 transition-all overflow-hidden flex items-center justify-center">
                             <UserButton 
                                 appearance={{ 

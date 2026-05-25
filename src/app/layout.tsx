@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "@/components/theme-provider";
+import * as React from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,7 +21,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): React.JSX.Element {
   return (
     <ClerkProvider
       appearance={{
@@ -28,23 +30,25 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en" className="dark">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased relative",
             geistSans.variable
           )}
         >
-          {/* Global decorative background elements */}
-          <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-            <div className="absolute inset-0 grid-bg opacity-30" />
-            <div className="absolute inset-0 mesh-glow-1 opacity-70" />
-            <div className="absolute inset-0 mesh-glow-2 opacity-50" />
-          </div>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {/* Global decorative background elements */}
+            <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+              <div className="absolute inset-0 grid-bg opacity-30" />
+              <div className="absolute inset-0 mesh-glow-1 opacity-70" />
+              <div className="absolute inset-0 mesh-glow-2 opacity-50" />
+            </div>
 
-          <div className="relative z-10 min-h-screen flex flex-col">
-            {children}
-          </div>
+            <div className="relative z-10 min-h-screen flex flex-col">
+              {children}
+            </div>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

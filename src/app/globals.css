@@ -24,31 +24,11 @@
     --input: 240 5.9% 90%;
     --ring: 262 83% 58%;
     --radius: 0.75rem;
-  }
 
-  /* Support dark-theme classes or system preferred dark mode */
-  @media (prefers-color-scheme: dark) {
-    :root:not(.light) {
-      --background: 240 10% 4%;
-      --foreground: 0 0% 98%;
-      --card: 240 10% 6%;
-      --card-foreground: 0 0% 98%;
-      --popover: 240 10% 6%;
-      --popover-foreground: 0 0% 98%;
-      --primary: 263 90% 65%;
-      --primary-foreground: 240 10% 4%;
-      --secondary: 240 3.7% 15.9%;
-      --secondary-foreground: 0 0% 98%;
-      --muted: 240 3.7% 15.9%;
-      --muted-foreground: 240 5% 64.9%;
-      --accent: 240 3.7% 15.9%;
-      --accent-foreground: 0 0% 98%;
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 0 0% 98%;
-      --border: 240 3.7% 15.9%;
-      --input: 240 3.7% 15.9%;
-      --ring: 263 90% 65%;
-    }
+    /* Responsive premium visual colors */
+    --grid-color: rgba(99, 102, 241, 0.06);
+    --mesh-color-1: rgba(139, 92, 246, 0.08);
+    --mesh-color-2: rgba(99, 102, 241, 0.04);
   }
 
   .dark {
@@ -71,6 +51,10 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 263 90% 65%;
+
+    --grid-color: rgba(139, 92, 246, 0.12);
+    --mesh-color-1: rgba(139, 92, 246, 0.16);
+    --mesh-color-2: rgba(99, 102, 241, 0.08);
   }
 }
 
@@ -87,21 +71,21 @@
 /* Premium Visual Utilities */
 
 .grid-bg {
-  background-image: radial-gradient(rgba(120, 119, 198, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 .mesh-glow-1 {
-  background: radial-gradient(circle 600px at 50% -100px, rgba(139, 92, 246, 0.15), transparent);
+  background: radial-gradient(circle 600px at 50% -100px, var(--mesh-color-1), transparent);
 }
 
 .mesh-glow-2 {
-  background: radial-gradient(circle 800px at 100% 200px, rgba(99, 102, 241, 0.08), transparent);
+  background: radial-gradient(circle 800px at 100% 200px, var(--mesh-color-2), transparent);
 }
 
 .glass-card {
   @apply bg-card/60 backdrop-blur-md border border-border/40 shadow-xl;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
 }
 
 .glass-header {
@@ -124,5 +108,5 @@
 
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.6; box-shadow: 0 0 0px rgba(139, 92, 246, 0.2); }
-  50% { opacity: 1; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5); }
+  50% { opacity: 1; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
 }
