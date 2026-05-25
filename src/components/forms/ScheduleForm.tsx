@@ -28,6 +28,7 @@ import { Plus, X, Globe, Save, Check } from "lucide-react"
 import { Input } from "../ui/input"
 import { saveSchedule } from "@/server/actions/schedule"
 import { scheduleFormSchema } from "@/schema/schedule"
+import { useTranslations } from "next-intl"
 
 type Availability = {
     startTime: string
@@ -43,6 +44,9 @@ export function ScheduleForm({
         availabilities: Availability[]
     }
 }): React.JSX.Element {
+    const t = useTranslations("schedule")
+    const tDays = useTranslations("days")
+    const tCommon = useTranslations("common")
     const [successMessage, setSuccessMessage] = useState<string>()
     const form = useForm<z.infer<typeof scheduleFormSchema>>({
         resolver: zodResolver(scheduleFormSchema),
@@ -71,10 +75,10 @@ export function ScheduleForm({
 
         if (data?.error) {
             form.setError("root", {
-                message: "There was an error saving your schedule",
+                message: t("errorMessage"),
             })
         } else {
-            setSuccessMessage("Schedule saved successfully!")
+            setSuccessMessage(t("successMessage"))
             setTimeout(() => setSuccessMessage(undefined), 3500)
         }
     }
@@ -104,7 +108,7 @@ export function ScheduleForm({
                         <FormItem className="space-y-1.5">
                             <FormLabel className="text-sm font-bold text-foreground flex items-center gap-1.5">
                                 <Globe aria-hidden="true" className="size-4 text-muted-foreground" />
-                                <span>Default Timezone</span>
+                                <span>{t("timezoneLabel")}</span>
                             </FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
@@ -127,7 +131,7 @@ export function ScheduleForm({
                 />
 
                 <div className="space-y-4 pt-4 border-t border-border/40">
-                    <FormLabel className="text-sm font-bold text-foreground">Weekly Availability</FormLabel>
+                    <FormLabel className="text-sm font-bold text-foreground">{t("weeklyLabel")}</FormLabel>
 
                     <div className="space-y-3.5">
                         {DAYS_OF_WEEK_IN_ORDER.map(dayOfWeek => {
@@ -138,7 +142,7 @@ export function ScheduleForm({
                                     {/* Weekday badge block */}
                                     <div className="flex items-center justify-between sm:justify-start gap-3 w-full sm:w-28 shrink-0 pt-1">
                                         <span className="uppercase text-xs font-extrabold tracking-wider text-foreground bg-primary/10 border border-primary/20 rounded px-2.5 py-1 text-center w-16 select-none shadow-sm">
-                                            {dayOfWeek.substring(0, 3)}
+                                            {tDays(dayOfWeek)}
                                         </span>
                                         <Button
                                             type="button"
@@ -162,7 +166,7 @@ export function ScheduleForm({
                                         {daySlots.length === 0 ? (
                                             <div className="flex items-center pt-1">
                                                 <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground bg-secondary/80 px-2.5 py-1 rounded border border-border/50 select-none">
-                                                    Unavailable
+                                                    {tCommon("unavailable")}
                                                 </span>
                                             </div>
                                         ) : (
@@ -240,7 +244,7 @@ export function ScheduleForm({
                         className="shadow-lg shadow-primary/20 font-semibold gap-1.5 h-10 px-5"
                     >
                         <Save aria-hidden="true" className="size-4" />
-                        <span>{form.formState.isSubmitting ? "Saving..." : "Save Schedule"}</span>
+                        <span>{form.formState.isSubmitting ? t("saving") : t("saveButton")}</span>
                     </Button>
                 </div>
             </form>

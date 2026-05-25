@@ -7,12 +7,13 @@ import { eventFormSchema } from "@/schema/events";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { createEvent, deleteEvent, updateEvent } from "@/server/actions/events";
 import * as React from "react";
 import { useTransition } from "react";
+import { useTranslations } from "next-intl";
 import {
     AlertDialogHeader,
     AlertDialog,
@@ -35,6 +36,7 @@ export function EventForm({ event }: {
         durationInMinutes: number;
     }
 }): React.JSX.Element {
+    const t = useTranslations("eventForm")
     const [isDeletingPending, startDeleteTransition] = useTransition()
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
@@ -50,7 +52,7 @@ export function EventForm({ event }: {
 
         if (data?.error) {
             form.setError("root", {
-                message: "Failed to create event",
+                message: t("errorCreate"),
                 type: "error"
             })
         }
@@ -73,16 +75,16 @@ export function EventForm({ event }: {
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel className="text-sm font-bold text-foreground">Event Name</FormLabel>
+                            <FormLabel className="text-sm font-bold text-foreground">{t("nameLabel")}</FormLabel>
                             <FormControl>
                                 <Input 
-                                    placeholder="e.g., Intro Sync, Technical Interview" 
+                                    placeholder={t("namePlaceholder")}
                                     className="h-10 border-input bg-background/50 hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                     {...field} 
                                 />
                             </FormControl>
                             <FormDescription className="text-xs text-muted-foreground">
-                                The title attendees will see when booking this meeting.
+                                {t("nameDescription")}
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -94,18 +96,18 @@ export function EventForm({ event }: {
                     name="durationInMinutes"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel className="text-sm font-bold text-foreground">Duration (minutes)</FormLabel>
+                            <FormLabel className="text-sm font-bold text-foreground">{t("durationLabel")}</FormLabel>
                             <FormControl>
                                 <Input 
                                     type="number" 
                                     min={1}
-                                    placeholder="30"
+                                    placeholder={t("durationPlaceholder")}
                                     className="h-10 border-input bg-background/50 hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                     {...field} 
                                 />
                             </FormControl>
                             <FormDescription className="text-xs text-muted-foreground">
-                                The length of the booked time slot.
+                                {t("durationDescription")}
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -117,16 +119,16 @@ export function EventForm({ event }: {
                     name="description"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel className="text-sm font-bold text-foreground">Description</FormLabel>
+                            <FormLabel className="text-sm font-bold text-foreground">{t("descriptionLabel")}</FormLabel>
                             <FormControl>
                                 <Textarea 
-                                    placeholder="Write a brief overview of what this meeting is about..." 
+                                    placeholder={t("descriptionPlaceholder")}
                                     className="resize-none h-28 border-input bg-background/50 hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                     {...field} 
                                 />
                             </FormControl>
                             <FormDescription className="text-xs text-muted-foreground">
-                                Optional instructions or notes for the guest.
+                                {t("descriptionDescription")}
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -139,10 +141,10 @@ export function EventForm({ event }: {
                     render={({ field }) => (
                         <FormItem className="bg-secondary/20 rounded-xl p-4 border border-border/40">
                             <div className="flex items-center justify-between">
-                                <div className="space-y-0.5 pr-4">
-                                    <FormLabel className="text-sm font-bold text-foreground">Active Status</FormLabel>
+                                <div className="space-y-0.5 pe-4">
+                                    <FormLabel className="text-sm font-bold text-foreground">{t("activeLabel")}</FormLabel>
                                     <FormDescription className="text-xs text-muted-foreground">
-                                        When active, guests can book slots using your public link.
+                                        {t("activeDescription")}
                                     </FormDescription>
                                 </div>
                                 <FormControl>
@@ -169,19 +171,19 @@ export function EventForm({ event }: {
                                         className="h-10 gap-1.5 font-semibold text-xs border border-destructive/20 hover:bg-destructive/10"
                                     >
                                         <Trash2 aria-hidden="true" className="size-3.5" />
-                                        Delete
+                                        {t("deleteButton")}
                                     </Button>
                                 </AlertDialogTrigger>
                                 <AlertDialogContent className="glass-card max-w-sm rounded-2xl border-border">
                                     <AlertDialogHeader>
-                                        <AlertDialogTitle className="font-bold text-lg">Are you sure?</AlertDialogTitle>
+                                        <AlertDialogTitle className="font-bold text-lg">{t("deleteTitle")}</AlertDialogTitle>
                                         <AlertDialogDescription className="text-sm text-muted-foreground">
-                                            This action is permanent and cannot be undone. Guests will no longer be able to schedule slots for this event template.
+                                            {t("deleteDescription")}
                                         </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter className="mt-4 gap-2">
                                         <AlertDialogCancel className="h-9 text-xs font-semibold px-4 border border-border/40 rounded-lg bg-background/50 hover:bg-secondary">
-                                            Cancel
+                                            {t("cancelButton")}
                                         </AlertDialogCancel>
                                         <AlertDialogAction
                                             disabled={isDeletingPending || form.formState.isSubmitting}
@@ -192,14 +194,14 @@ export function EventForm({ event }: {
 
                                                     if (data?.error) {
                                                         form.setError("root", {
-                                                            message: "Failed to delete the event.",
+                                                            message: t("errorDelete"),
                                                         })
                                                     }
                                                 })
                                             }}
                                             className="h-9 text-xs font-semibold px-4 rounded-lg shadow-sm"
                                         >
-                                            Delete Event
+                                            {t("deleteConfirm")}
                                         </AlertDialogAction>
                                     </AlertDialogFooter>
                                 </AlertDialogContent>
@@ -209,14 +211,14 @@ export function EventForm({ event }: {
 
                     <div className="flex gap-2">
                         <Button type="button" asChild variant="outline" className="h-10 text-xs font-semibold">
-                            <Link href="/events">Cancel</Link>
+                            <Link href="/events">{t("cancelButton")}</Link>
                         </Button>
                         <Button 
                             disabled={form.formState.isSubmitting} 
                             type="submit" 
                             className="h-10 text-xs font-semibold shadow-lg shadow-primary/10"
                         >
-                            {form.formState.isSubmitting ? "Saving..." : "Save Event"}
+                            {form.formState.isSubmitting ? t("saving") : t("saveButton")}
                         </Button>
                     </div>
                 </div>

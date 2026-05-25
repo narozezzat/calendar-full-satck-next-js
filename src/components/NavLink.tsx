@@ -1,8 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { Link, usePathname } from "@/i18n/routing"
 import * as React from "react"
 import { ComponentProps } from "react"
 

@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import { ClerkProvider } from "@clerk/nextjs";
-import { ThemeProvider } from "@/components/theme-provider";
 import * as React from "react";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-sans",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Calendly App",
@@ -22,35 +12,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>): React.JSX.Element {
-  return (
-    <ClerkProvider
-      appearance={{
-        variables: {
-          colorPrimary: "hsl(262, 83%, 58%)",
-        },
-      }}
-    >
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased relative",
-            geistSans.variable
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            {/* Global decorative background elements */}
-            <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-              <div className="absolute inset-0 grid-bg opacity-30" />
-              <div className="absolute inset-0 mesh-glow-1 opacity-70" />
-              <div className="absolute inset-0 mesh-glow-2 opacity-50" />
-            </div>
-
-            <div className="relative z-10 min-h-screen flex flex-col">
-              {children}
-            </div>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
-  );
+  return children as React.JSX.Element;
 }

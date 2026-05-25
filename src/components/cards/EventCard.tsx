@@ -2,11 +2,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { CopyEventButton } from "@/components/CopyEventButton";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { formatEventDescription } from "@/lib/formatters";
 import { EventCardProps } from "@/types/eventTypes";
 import { Clock, EyeOff, Edit, ExternalLink } from "lucide-react";
 import * as React from "react";
+import { useTranslations } from "next-intl";
 
 export default function EventCard({
     id,
@@ -16,13 +17,15 @@ export default function EventCard({
     durationInMinutes,
     clerkUserId,
 }: EventCardProps): React.JSX.Element {
+    const t = useTranslations("common")
+
     return (
         <Card className={cn(
             "flex flex-col glass-card hover-card-glow relative group overflow-hidden",
             !isActive && "border-secondary/30 opacity-75 hover:opacity-100"
         )}>
             {/* Pulsing indicator or inactive indicator */}
-            <div className="absolute top-4 right-4 flex items-center gap-1.5 z-10">
+            <div className="absolute top-4 end-4 flex items-center gap-1.5 z-10">
                 {isActive ? (
                     <span className="flex h-2.5 w-2.5 relative">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -30,12 +33,12 @@ export default function EventCard({
                     </span>
                 ) : (
                     <span className="flex items-center gap-1 text-[10px] uppercase font-bold text-muted-foreground bg-secondary/50 px-2 py-0.5 rounded border border-border/40">
-                        <EyeOff aria-hidden="true" className="size-3" /> Inactive
+                        <EyeOff aria-hidden="true" className="size-3" /> {t("inactive")}
                     </span>
                 )}
             </div>
 
-            <CardHeader className="pb-3 pr-20">
+            <CardHeader className="pb-3 pe-20">
                 <CardTitle className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
                     {name}
                 </CardTitle>
@@ -74,14 +77,14 @@ export default function EventCard({
                                 className="flex items-center gap-1.5"
                             >
                                 <ExternalLink aria-hidden="true" className="size-3.5" />
-                                <span>Preview</span>
+                                <span>{t("preview")}</span>
                             </Link>
                         </Button>
                     </>
                 ) : null}
                 <Button size="sm" asChild className="h-9 text-xs font-semibold shadow-sm">
                     <Link href={`/events/${id}/edit`} className="flex items-center gap-1.5">
-                        <Edit aria-hidden="true" className="size-3.5" /> Edit
+                        <Edit aria-hidden="true" className="size-3.5" /> {t("edit")}
                     </Link>
                 </Button>
             </CardFooter>

@@ -12,7 +12,7 @@ import {
     FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { Button } from "../ui/button"
 import { Textarea } from "../ui/textarea"
 import {
@@ -37,6 +37,7 @@ import { useMemo } from "react"
 import { toZonedTime } from "date-fns-tz"
 import { createMeeting } from "@/server/actions/meetings"
 import { meetingFormSchema } from "@/schema/meetings"
+import { useTranslations } from "next-intl"
 
 export function MeetingForm({
     validTimes,
@@ -47,6 +48,7 @@ export function MeetingForm({
     eventId: string
     clerkUserId: string
 }): React.JSX.Element {
+    const t = useTranslations("meetingForm")
     const form = useForm<z.infer<typeof meetingFormSchema>>({
         resolver: zodResolver(meetingFormSchema),
         defaultValues: {
@@ -69,7 +71,7 @@ export function MeetingForm({
 
         if (data?.error) {
             form.setError("root", {
-                message: "There was an error saving your event",
+                message: t("errorMessage"),
             })
         }
     }
@@ -100,7 +102,7 @@ export function MeetingForm({
                         <FormItem className="space-y-1.5">
                             <FormLabel className="text-sm font-bold text-foreground flex items-center gap-1.5">
                                 <Globe aria-hidden="true" className="size-4 text-muted-foreground" />
-                                <span>Your Timezone</span>
+                                <span>{t("timezoneLabel")}</span>
                             </FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
@@ -134,23 +136,23 @@ export function MeetingForm({
                                 <FormItem className="flex flex-col space-y-1.5">
                                     <FormLabel className="text-sm font-bold text-foreground flex items-center gap-1.5">
                                         <CalendarIcon aria-hidden="true" className="size-4 text-muted-foreground" />
-                                        <span>Meeting Date</span>
+                                        <span>{t("dateLabel")}</span>
                                     </FormLabel>
                                     <PopoverTrigger asChild>
                                         <FormControl>
                                             <Button
                                                 variant="outline"
                                                 className={cn(
-                                                    "h-10 pl-3 text-left font-normal flex w-full bg-background/50 border-input hover:border-muted-foreground/40 hover:bg-secondary/40",
+                                                    "h-10 ps-3 text-start font-normal flex w-full bg-background/50 border-input hover:border-muted-foreground/40 hover:bg-secondary/40",
                                                     !field.value && "text-muted-foreground"
                                                 )}
                                             >
                                                 {field.value ? (
                                                     formatDate(field.value)
                                                 ) : (
-                                                    <span>Select a date</span>
+                                                    <span>{t("datePlaceholder")}</span>
                                                 )}
-                                                <CalendarIcon aria-hidden="true" className="ml-auto h-4 w-4 opacity-50" />
+                                                <CalendarIcon aria-hidden="true" className="ms-auto h-4 w-4 opacity-50" />
                                             </Button>
                                         </FormControl>
                                     </PopoverTrigger>
@@ -185,20 +187,20 @@ export function MeetingForm({
                             <FormItem className="flex flex-col space-y-1.5">
                                 <FormLabel className="text-sm font-bold text-foreground flex items-center gap-1.5">
                                     <Clock aria-hidden="true" className="size-4 text-muted-foreground" />
-                                    <span>Time Slot</span>
+                                    <span>{t("timeLabel")}</span>
                                 </FormLabel>
                                 <div className="min-h-[100px] flex-1">
                                     {date == null ? (
                                         <div className="flex flex-col items-center justify-center h-full border border-dashed border-border rounded-xl p-4 text-center bg-secondary/10">
                                             <CalendarIcon aria-hidden="true" className="size-5 text-muted-foreground/60 mb-1.5" />
-                                            <span className="text-xs text-muted-foreground font-semibold">Select a date first</span>
+                                            <span className="text-xs text-muted-foreground font-semibold">{t("selectDateFirst")}</span>
                                         </div>
                                     ) : availableSlotsForDay.length === 0 ? (
                                         <div className="flex flex-col items-center justify-center h-full border border-dashed border-border rounded-xl p-4 text-center bg-secondary/10">
-                                            <span className="text-xs text-muted-foreground font-semibold">No available slots</span>
+                                            <span className="text-xs text-muted-foreground font-semibold">{t("noSlots")}</span>
                                         </div>
                                     ) : (
-                                        <div className="grid grid-cols-2 gap-2 max-h-[175px] overflow-y-auto pr-1">
+                                        <div className="grid grid-cols-2 gap-2 max-h-[175px] overflow-y-auto pe-1">
                                             {availableSlotsForDay.map(time => {
                                                 const isSelected = field.value?.toISOString() === time.toISOString();
                                                 return (
@@ -229,7 +231,7 @@ export function MeetingForm({
 
                 {/* Personal Information */}
                 <div className="space-y-4 pt-4 border-t border-border/40">
-                    <FormLabel className="text-sm font-bold text-foreground">Guest Information</FormLabel>
+                    <FormLabel className="text-sm font-bold text-foreground">{t("guestInfoLabel")}</FormLabel>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <FormField
@@ -239,11 +241,11 @@ export function MeetingForm({
                                 <FormItem className="space-y-1">
                                     <FormLabel className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
                                         <User aria-hidden="true" className="size-3.5" />
-                                        <span>Full Name</span>
+                                        <span>{t("nameLabel")}</span>
                                     </FormLabel>
                                     <FormControl>
                                         <Input 
-                                            placeholder="Your Name" 
+                                            placeholder={t("namePlaceholder")}
                                             className="h-10 bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                             {...field} 
                                         />
@@ -259,12 +261,12 @@ export function MeetingForm({
                                 <FormItem className="space-y-1">
                                     <FormLabel className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
                                         <Mail aria-hidden="true" className="size-3.5" />
-                                        <span>Email Address</span>
+                                        <span>{t("emailLabel")}</span>
                                     </FormLabel>
                                     <FormControl>
                                         <Input 
                                             type="email" 
-                                            placeholder="you@example.com" 
+                                            placeholder={t("emailPlaceholder")}
                                             className="h-10 bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                             {...field} 
                                         />
@@ -282,11 +284,11 @@ export function MeetingForm({
                             <FormItem className="space-y-1">
                                 <FormLabel className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
                                     <FileText aria-hidden="true" className="size-3.5" />
-                                    <span>Notes (optional)</span>
+                                    <span>{t("notesLabel")}</span>
                                 </FormLabel>
                                 <FormControl>
                                     <Textarea 
-                                        placeholder="Add details, topics, or requests..." 
+                                        placeholder={t("notesPlaceholder")}
                                         className="resize-none h-24 bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                         {...field} 
                                     />
@@ -306,7 +308,7 @@ export function MeetingForm({
                         variant="outline"
                         className="h-10 text-xs font-semibold"
                     >
-                        <Link href={`/book/${clerkUserId}`}>Cancel</Link>
+                        <Link href={`/book/${clerkUserId}`}>{t("cancelButton")}</Link>
                     </Button>
                     <Button 
                         disabled={form.formState.isSubmitting || !form.watch("startTime")} 
@@ -314,7 +316,7 @@ export function MeetingForm({
                         className="h-10 text-xs font-semibold shadow-lg shadow-primary/20 gap-1.5"
                     >
                         <CheckCircle2 aria-hidden="true" className="size-4" />
-                        <span>{form.formState.isSubmitting ? "Scheduling..." : "Schedule Meeting"}</span>
+                        <span>{form.formState.isSubmitting ? t("submitting") : t("submitButton")}</span>
                     </Button>
                 </div>
             </form>

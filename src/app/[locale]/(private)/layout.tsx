@@ -1,0 +1,68 @@
+import { NavLink } from "@/components/NavLink";
+import { UserButton } from "@clerk/nextjs";
+import { CalendarRange } from "lucide-react";
+import * as React from "react";
+import { ReactNode } from "react";
+import { Link } from "@/i18n/routing";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { getTranslations } from "next-intl/server";
+
+export default async function PrivateLayout({ children }: { children: ReactNode }): Promise<React.JSX.Element> {
+    const t = await getTranslations("nav");
+    const tc = await getTranslations("common");
+
+    return (
+        <div className="flex flex-col flex-1 min-h-0">
+            {/* Premium glassmorphic header */}
+            <header className="shrink-0 w-full border-b border-border/40 bg-background/85 backdrop-blur-xl">
+                <div className="container flex flex-wrap items-center gap-3 sm:gap-4 py-3 sm:py-0 sm:h-16">
+
+                    {/* Brand */}
+                    <Link
+                        href="/events"
+                        className="flex items-center gap-2 sm:gap-2.5 font-bold text-base sm:text-lg tracking-tight select-none shrink-0 group"
+                        aria-label={tc("appName")}
+                    >
+                        <div className="bg-primary/10 p-1.5 sm:p-2 rounded-lg text-primary border border-primary/20 shadow-sm shadow-primary/10 transition-all group-hover:shadow-primary/30 group-hover:border-primary/40">
+                            <CalendarRange aria-hidden="true" className="size-4 sm:size-5" />
+                        </div>
+                        <span className="hidden sm:inline text-foreground">{tc("appName")}</span>
+                    </Link>
+
+                    {/* Nav links — centered on sm+, full row on xs */}
+                    <nav
+                        className="order-3 sm:order-none w-full sm:w-auto flex items-center justify-center sm:justify-start gap-1 sm:gap-2 sm:ms-4 font-medium"
+                        aria-label={t("calendar")}
+                    >
+                        <NavLink href="/events">{t("events")}</NavLink>
+                        <NavLink href="/schedule">{t("schedule")}</NavLink>
+                    </nav>
+
+                    {/* Actions */}
+                    <div className="ms-auto flex items-center gap-2 sm:gap-3 shrink-0">
+                        <LanguageSwitcher />
+                        <ThemeToggle />
+                        <div className="size-9 rounded-full ring-2 ring-primary/20 hover:ring-primary/40 transition-all overflow-hidden flex items-center justify-center">
+                            <UserButton
+                                appearance={{
+                                    elements: {
+                                        userButtonAvatarBox: "size-full",
+                                        userButtonTrigger: "focus:shadow-none focus:outline-none",
+                                    },
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Scrollable content */}
+            <main className="flex-1 overflow-y-auto overflow-x-hidden relative z-10">
+                <div className="container py-6 sm:py-8 animate-fade-in">
+                    {children}
+                </div>
+            </main>
+        </div>
+    );
+}

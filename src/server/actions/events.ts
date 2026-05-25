@@ -5,9 +5,10 @@ import { EventTable } from "@/drizzle/schema";
 import { eventFormSchema } from "@/schema/events";
 import { auth } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import "use-server";
 import { z } from "zod";
+import { getLocale } from "next-intl/server";
 
 export async function createEvent(
   unsafeData: z.infer<typeof eventFormSchema>
@@ -21,7 +22,8 @@ export async function createEvent(
 
   await db.insert(EventTable).values({ ...data, clerkUserId: userId });
 
-  redirect("/events");
+  const locale = await getLocale();
+  redirect({ href: "/events", locale });
 }
 
 export async function updateEvent(
@@ -44,7 +46,8 @@ export async function updateEvent(
     return { error: true };
   }
 
-  redirect("/events");
+  const locale = await getLocale();
+  redirect({ href: "/events", locale });
 }
 
 export async function deleteEvent(
@@ -64,5 +67,6 @@ export async function deleteEvent(
     return { error: true };
   }
 
-  redirect("/events");
+  const locale = await getLocale();
+  redirect({ href: "/events", locale });
 }

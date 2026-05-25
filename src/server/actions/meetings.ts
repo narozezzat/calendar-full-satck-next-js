@@ -4,9 +4,10 @@ import { meetingActionSchema } from "@/schema/meetings";
 import "use-server";
 import { z } from "zod";
 import { createCalendarEvent } from "../googleCalendar";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import { fromZonedTime } from "date-fns-tz";
 import { getValidTimesFromSchedule } from "@/lib/getValidTimesFromSchedule";
+import { getLocale } from "next-intl/server";
 
 export async function createMeeting(
   unsafeData: z.infer<typeof meetingActionSchema>
@@ -37,9 +38,9 @@ export async function createMeeting(
     eventName: event.name,
   });
 
-  redirect(
-    `/book/${data.clerkUserId}/${
-      data.eventId
-    }/success?startTime=${data.startTime.toISOString()}`
-  );
+  const locale = await getLocale();
+  redirect({
+    href: `/book/${data.clerkUserId}/${data.eventId}/success?startTime=${data.startTime.toISOString()}`,
+    locale,
+  });
 }

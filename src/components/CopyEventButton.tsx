@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { Button, ButtonProps } from "./ui/button";
 import { CheckCheck, Copy, CopyX } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type CopyState = "idle" | "copied" | "error";
 
 export function CopyEventButton({ eventId, clerkUserId, ...buttonProps }: Omit<ButtonProps,
     "children" | "onClick"> & { eventId: string; clerkUserId: string }) {
 
+    const t = useTranslations("common")
     const [copyState, setCopyState] = useState<CopyState>("idle")
 
     const CopyIcon = getCopyIcon(copyState)
@@ -25,8 +27,8 @@ export function CopyEventButton({ eventId, clerkUserId, ...buttonProps }: Omit<B
                 })
 
         }}>
-            <CopyIcon className="size-4 mr-2" />
-            {getChildren(copyState)}
+            <CopyIcon className="size-4 me-2" />
+            {getChildren(copyState, t)}
         </Button>
     )
 }
@@ -42,13 +44,13 @@ function getCopyIcon(state: CopyState) {
     }
 }
 
-function getChildren(state: CopyState) {
+function getChildren(state: CopyState, t: ReturnType<typeof useTranslations<"common">>) {
     switch (state) {
         case "idle":
-            return "Copy Link";
+            return t("copyLink");
         case "copied":
-            return "Copied";
+            return t("copied");
         case "error":
-            return "Error";
+            return t("copyError");
     }
 }

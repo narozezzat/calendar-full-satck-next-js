@@ -22,6 +22,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        arabic: ["var(--font-arabic)", ...fontFamily.sans],
       },
       colors: {
         background: "hsl(var(--background))",

@@ -1,0 +1,163 @@
+{
+  "common": {
+    "appName": "إيفنتلي",
+    "loading": "جاري تحميل الصفحة",
+    "loadingEvent": "جاري تحميل تفاصيل الفعالية",
+    "openEventEditor": "جاري فتح محرر الفعالية",
+    "openEventCreator": "جاري فتح منشئ الفعالية",
+    "pleaseWait": "يرجى الانتظار...",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "preview": "معاينة",
+    "copyLink": "نسخ الرابط",
+    "copied": "تم النسخ",
+    "copyError": "خطأ",
+    "inactive": "غير نشط",
+    "select": "اختيار",
+    "unavailable": "غير متاح",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "getStarted": "ابدأ الآن",
+    "getStartedFree": "ابدأ مجاناً",
+    "bookAnEvent": "احجز موعداً"
+  },
+  "landing": {
+    "badge": "مساعد الجدولة الذكي",
+    "heroTitle1": "اجتماعات مبسّطة.",
+    "heroTitle2": "بدون أي تعقيد.",
+    "heroDescription": "أنشئ فعاليات قابلة للتخصيص، شارك روابط الحجز، ودع الحضور يجدون الأوقات المثالية في تقويمك. سريع، آمن، وأوتوماتيكي بالكامل.",
+    "benefits": {
+      "unlimited": "فعاليات جدولة غير محدودة",
+      "integration": "تكامل مع جوجل وأوتلوك",
+      "availability": "نوافذ توفر مخصصة",
+      "timezone": "حل تعارضات المناطق الزمنية"
+    },
+    "mockup": {
+      "activePreview": "معاينة نشطة",
+      "productDemo": "عرض المنتج والأسئلة",
+      "availabilitySlot": "فترة توفر ٣٠ دقيقة",
+      "selectTime": "اختر الوقت المفضل",
+      "timezoneSync": "يتم المزامنة تلقائياً مع مناطقك الزمنية لتجنب التداخل."
+    },
+    "footer": {
+      "copyright": "© {year} إيفنتلي. جميع الحقوق محفوظة.",
+      "privacy": "سياسة الخصوصية",
+      "terms": "شروط الخدمة",
+      "security": "الأمان"
+    }
+  },
+  "auth": {
+    "badge": "تحكم آمن بالوصول",
+    "title": "أدِر جدولك مثل",
+    "titleHighlight": "مطور محترف",
+    "features": {
+      "calendar": {
+        "title": "توفر تقويم مرن",
+        "description": "خصص الفترات الزمنية اليومية وساعات العمل والتواريخ الاستثنائية."
+      },
+      "timezone": {
+        "title": "حسابات فورية للمناطق الزمنية",
+        "description": "لا تحجز مرتين ولا تخلط بين فروقات التوقيت مع الضيوف الدوليين."
+      },
+      "booking": {
+        "title": "روابط حجز تلقائية",
+        "description": "أرسل روابط لجدولة الاجتماعات. نحن نتولى رسائل التأكيد الإلكترونية."
+      }
+    },
+    "footer": "محمي بخدمات أمان إيفنتلي."
+  },
+  "nav": {
+    "events": "الفعاليات",
+    "schedule": "الجدول",
+    "calendar": "التقويم"
+  },
+  "events": {
+    "title": "فعالياتك",
+    "description": "أدِر قوالب اجتماعاتك والجداول النشطة وروابط الحجز القابلة للمشاركة.",
+    "newEvent": "فعالية جديدة",
+    "empty": {
+      "title": "لم يتم إنشاء أي فعاليات بعد",
+      "description": "ابدأ بإنشاء أول قالب فعالية. بمجرد تفعيله، سيتمكن العملاء من حجز المواعيد مباشرة.",
+      "cta": "إنشاء قالب فعالية"
+    }
+  },
+  "eventForm": {
+    "newTitle": "فعالية جديدة",
+    "editTitle": "تعديل الفعالية",
+    "nameLabel": "اسم الفعالية",
+    "namePlaceholder": "مثال: مقابلة تعارف، مقابلة تقنية",
+    "nameDescription": "العنوان الذي سيراه الحضور عند حجز هذا الاجتماع.",
+    "durationLabel": "المدة (بالدقائق)",
+    "durationPlaceholder": "٣٠",
+    "durationDescription": "طول الفترة الزمنية المحجوزة.",
+    "descriptionLabel": "الوصف",
+    "descriptionPlaceholder": "اكتب نظرة عامة موجزة عن موضوع هذا الاجتماع...",
+    "descriptionDescription": "تعليمات أو ملاحظات اختيارية للضيف.",
+    "activeLabel": "حالة التفعيل",
+    "activeDescription": "عند التفعيل، يمكن للضيوف حجز المواعيد باستخدام رابطك العام.",
+    "deleteButton": "حذف",
+    "deleteTitle": "هل أنت متأكد؟",
+    "deleteDescription": "هذا الإجراء دائم ولا يمكن التراجع عنه. لن يتمكن الضيوف بعد الآن من جدولة المواعيد لقالب الفعالية هذا.",
+    "deleteConfirm": "حذف الفعالية",
+    "cancelButton": "إلغاء",
+    "saveButton": "حفظ الفعالية",
+    "saving": "جاري الحفظ...",
+    "errorCreate": "فشل في إنشاء الفعالية",
+    "errorDelete": "فشل في حذف الفعالية."
+  },
+  "schedule": {
+    "title": "الجدول",
+    "timezoneLabel": "المنطقة الزمنية الافتراضية",
+    "weeklyLabel": "التوفر الأسبوعي",
+    "saveButton": "حفظ الجدول",
+    "saving": "جاري الحفظ...",
+    "successMessage": "تم حفظ الجدول بنجاح!",
+    "errorMessage": "حدث خطأ أثناء حفظ جدولك"
+  },
+  "days": {
+    "monday": "الإثنين",
+    "tuesday": "الثلاثاء",
+    "wednesday": "الأربعاء",
+    "thursday": "الخميس",
+    "friday": "الجمعة",
+    "saturday": "السبت",
+    "sunday": "الأحد"
+  },
+  "booking": {
+    "welcomeMessage": "مرحباً بك في صفحة الجدولة الخاصة بي. يرجى اتباع التعليمات لإضافة موعد إلى تقويمي.",
+    "bookWith": "حجز {eventName} مع {userName}",
+    "noTimeSlots": "{userName} محجوز حالياً بالكامل. يرجى المراجعة لاحقاً أو اختيار فعالية أقصر.",
+    "chooseAnother": "اختر فعالية أخرى",
+    "successTitle": "تم حجز {eventName} مع {userName} بنجاح",
+    "successMessage": "يجب أن تتلقى رسالة تأكيد عبر البريد الإلكتروني قريباً. يمكنك إغلاق هذه الصفحة بأمان الآن."
+  },
+  "meetingForm": {
+    "timezoneLabel": "منطقتك الزمنية",
+    "dateLabel": "تاريخ الاجتماع",
+    "datePlaceholder": "اختر تاريخاً",
+    "timeLabel": "الفترة الزمنية",
+    "selectDateFirst": "اختر تاريخاً أولاً",
+    "noSlots": "لا توجد فترات متاحة",
+    "guestInfoLabel": "معلومات الضيف",
+    "nameLabel": "الاسم الكامل",
+    "namePlaceholder": "اسمك",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "you@example.com",
+    "notesLabel": "ملاحظات (اختياري)",
+    "notesPlaceholder": "أضف تفاصيل أو مواضيع أو طلبات...",
+    "cancelButton": "إلغاء",
+    "submitButton": "جدولة الاجتماع",
+    "submitting": "جاري الجدولة...",
+    "errorMessage": "حدث خطأ أثناء حفظ موعدك"
+  },
+  "theme": {
+    "toggleLabel": "تبديل المظهر"
+  },
+  "language": {
+    "switchLabel": "تبديل اللغة",
+    "en": "EN",
+    "ar": "عر"
+  }
+}
