@@ -31,7 +31,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
             <div className="bg-primary/10 p-1.5 sm:p-2 rounded-lg text-primary border border-primary/20 shadow-sm shadow-primary/10 shrink-0">
               <CalendarRange aria-hidden="true" className="size-4 sm:size-5" />
             </div>
-            <span className="truncate">{tc("appName")}</span>
+            <span className="hidden sm:inline truncate">{tc("appName")}</span>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-3">
             <LanguageSwitcher />
