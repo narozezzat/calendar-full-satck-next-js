@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { createEvent, deleteEvent, updateEvent } from "@/server/actions/events";
+import * as React from "react";
 import { useTransition } from "react";
 import {
     AlertDialogHeader,
@@ -23,7 +24,7 @@ import {
     AlertDialogAction
 } from "../ui/alert-dialog";
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog";
-
+import { Trash2 } from "lucide-react";
 
 export function EventForm({ event }: {
     event?: {
@@ -33,7 +34,7 @@ export function EventForm({ event }: {
         isActive: boolean;
         durationInMinutes: number;
     }
-}) {
+}): React.JSX.Element {
     const [isDeletingPending, startDeleteTransition] = useTransition()
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
@@ -59,126 +60,165 @@ export function EventForm({ event }: {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="flex gap-6 flex-col"
+                className="space-y-6"
             >
-                {form.formState.errors.root && (
-                    <div className="text-destructive text-sm">
+                {form.formState.errors.root ? (
+                    <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm rounded-lg p-3.5 font-medium">
                         {form.formState.errors.root.message}
                     </div>
-                )}
+                ) : null}
+                
                 <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Event Name</FormLabel>
+                            <FormLabel className="text-sm font-bold text-foreground">Event Name</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input 
+                                    placeholder="e.g., Intro Sync, Technical Interview" 
+                                    className="h-10 border-border/60 bg-background/50 focus-visible:ring-primary/30 focus-visible:border-primary"
+                                    {...field} 
+                                />
                             </FormControl>
-                            <FormDescription>
-                                The name users will see when booking
+                            <FormDescription className="text-xs text-muted-foreground">
+                                The title attendees will see when booking this meeting.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                
                 <FormField
                     control={form.control}
                     name="durationInMinutes"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Duration</FormLabel>
+                            <FormLabel className="text-sm font-bold text-foreground">Duration (minutes)</FormLabel>
                             <FormControl>
-                                <Input type="number" {...field} />
+                                <Input 
+                                    type="number" 
+                                    min={1}
+                                    placeholder="30"
+                                    className="h-10 border-border/60 bg-background/50 focus-visible:ring-primary/30 focus-visible:border-primary"
+                                    {...field} 
+                                />
                             </FormControl>
-                            <FormDescription>
-                                In Minutes
+                            <FormDescription className="text-xs text-muted-foreground">
+                                The length of the booked time slot.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                
                 <FormField
                     control={form.control}
                     name="description"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Description</FormLabel>
+                            <FormLabel className="text-sm font-bold text-foreground">Description</FormLabel>
                             <FormControl>
-                                <Textarea className="resize-none h-32" {...field} />
+                                <Textarea 
+                                    placeholder="Write a brief overview of what this meeting is about..." 
+                                    className="resize-none h-28 border-border/60 bg-background/50 focus-visible:ring-primary/30 focus-visible:border-primary"
+                                    {...field} 
+                                />
                             </FormControl>
-                            <FormDescription>
-                                Optional description of event
+                            <FormDescription className="text-xs text-muted-foreground">
+                                Optional instructions or notes for the guest.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                
                 <FormField
                     control={form.control}
                     name="isActive"
                     render={({ field }) => (
-                        <FormItem>
-                            <div className="flex items-center gap-2">
+                        <FormItem className="bg-secondary/20 rounded-xl p-4 border border-border/40">
+                            <div className="flex items-center justify-between">
+                                <div className="space-y-0.5 pr-4">
+                                    <FormLabel className="text-sm font-bold text-foreground">Active Status</FormLabel>
+                                    <FormDescription className="text-xs text-muted-foreground">
+                                        When active, guests can book slots using your public link.
+                                    </FormDescription>
+                                </div>
                                 <FormControl>
                                     <Switch
                                         checked={field.value}
                                         onCheckedChange={field.onChange}
                                     />
                                 </FormControl>
-                                <FormLabel>Active</FormLabel>
                             </div>
-                            <FormDescription>
-                                Inactive events will not be visible for users to book
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <div className="flex gap-2 justify-end">
-                    {event && (
-                        <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                                <Button variant="destructiveGhost" disabled={isDeletingPending || form.formState.isSubmitting}>
-                                    Delete
-                                </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>
-                                        Are you sure?
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        This action cannot be undone. this will permanently delete your this event.
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction
-                                        disabled={isDeletingPending || form.formState.isSubmitting}
-                                        variant="destructive"
-                                        onClick={() => {
-                                            startDeleteTransition(async () => {
-                                                const data = await deleteEvent(event.id)
 
-                                                if (data?.error) {
-                                                    form.setError("root", {
-                                                        message: "There was n error deleting your event",
-                                                    })
-                                                }
-                                            })
-                                        }}
+                <div className="flex items-center justify-between pt-4 border-t border-border/40 gap-3">
+                    <div>
+                        {event ? (
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button 
+                                        variant="destructiveGhost" 
+                                        type="button"
+                                        disabled={isDeletingPending || form.formState.isSubmitting}
+                                        className="h-10 gap-1.5 font-semibold text-xs border border-destructive/20 hover:bg-destructive/10"
                                     >
+                                        <Trash2 aria-hidden="true" className="size-3.5" />
                                         Delete
-                                    </AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
-                    )}
-                    <Button type="button" asChild variant={"outline"}>
-                        <Link href="/events">Cancel</Link>
-                    </Button>
-                    <Button type="submit">Save</Button>
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent className="glass-card max-w-sm rounded-2xl border-border/50">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle className="font-bold text-lg">Are you sure?</AlertDialogTitle>
+                                        <AlertDialogDescription className="text-sm text-muted-foreground">
+                                            This action is permanent and cannot be undone. Guests will no longer be able to schedule slots for this event template.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter className="mt-4 gap-2">
+                                        <AlertDialogCancel className="h-9 text-xs font-semibold px-4 border border-border/40 rounded-lg bg-background/50 hover:bg-secondary">
+                                            Cancel
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction
+                                            disabled={isDeletingPending || form.formState.isSubmitting}
+                                            variant="destructive"
+                                            onClick={() => {
+                                                startDeleteTransition(async () => {
+                                                    const data = await deleteEvent(event.id)
+
+                                                    if (data?.error) {
+                                                        form.setError("root", {
+                                                            message: "Failed to delete the event.",
+                                                        })
+                                                    }
+                                                })
+                                            }}
+                                            className="h-9 text-xs font-semibold px-4 rounded-lg shadow-sm"
+                                        >
+                                            Delete Event
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                        ) : null}
+                    </div>
+
+                    <div className="flex gap-2">
+                        <Button type="button" asChild variant="outline" className="h-10 text-xs font-semibold">
+                            <Link href="/events">Cancel</Link>
+                        </Button>
+                        <Button 
+                            disabled={form.formState.isSubmitting} 
+                            type="submit" 
+                            className="h-10 text-xs font-semibold shadow-lg shadow-primary/10"
+                        >
+                            {form.formState.isSubmitting ? "Saving..." : "Save Event"}
+                        </Button>
+                    </div>
                 </div>
             </form>
         </Form>

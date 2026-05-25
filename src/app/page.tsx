@@ -1,29 +1,148 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { CalendarRange, Sparkles, CheckCircle2, Clock, Calendar, ArrowRight } from "lucide-react";
+import * as React from "react";
 
-export default function HomePage() {
+export default function HomePage(): React.JSX.Element {
   const { userId } = auth();
   if (userId != null) redirect("/events");
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Card className="w-full mx-4 lg:mx-0 lg:w-1/3">
-        <div className="text-center mt-4">
-          <h1 className="text-3xl font-semibold">Login in</h1>
-          <p className="text-gray-400 text-sm">Welcome to Evently!</p>
+    <div className="min-h-screen flex flex-col justify-between">
+      {/* Landing Page Navbar */}
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+        <div className="container flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2.5 font-bold text-xl tracking-tight">
+            <div className="bg-primary/10 p-2 rounded-lg text-primary border border-primary/20 shadow-sm shadow-primary/10">
+              <CalendarRange aria-hidden="true" className="size-5" />
+            </div>
+            <span>Evently</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <SignInButton mode="modal">
+              <Button variant="ghost" className="text-sm font-medium hover:bg-primary/5 hover:text-primary">
+                Sign In
+              </Button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <Button size="sm" className="shadow-lg shadow-primary/20 font-semibold bg-primary hover:bg-primary/95 text-primary-foreground">
+                Get Started
+              </Button>
+            </SignUpButton>
+          </div>
         </div>
-        <div className="flex px-4 py-8 flex-col gap-4">
-          <SignInButton>
-            <Button className="w-full">Sign In</Button>
-          </SignInButton>
-          <SignUpButton>
-            <Button className="w-full" variant="outline">Sign Up</Button>
-          </SignUpButton>
+      </header>
+
+      {/* Hero Section */}
+      <main className="flex-1 flex items-center">
+        <div className="container py-12 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Text */}
+          <div className="lg:col-span-7 flex flex-col space-y-6 text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 border border-primary/25 text-primary w-fit animate-pulse-glow">
+              <Sparkles aria-hidden="true" className="size-3.5" />
+              <span>Modern Scheduling Assistant</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-foreground">
+              Meetings, Simplified.<br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-400 to-indigo-500">
+                Without the Friction.
+              </span>
+            </h1>
+            <p className="text-muted-foreground text-lg sm:text-xl max-w-[560px] leading-relaxed">
+              Create customizable events, share booking links, and let attendees find the perfect time slots on your calendar. Fast, secure, and fully automated.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <SignUpButton mode="modal">
+                <Button size="lg" className="h-12 px-6 text-base font-semibold shadow-xl shadow-primary/25 group bg-primary text-primary-foreground hover:bg-primary/90">
+                  Get Started Free
+                  <ArrowRight aria-hidden="true" className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </SignUpButton>
+              <SignInButton mode="modal">
+                <Button size="lg" variant="outline" className="h-12 px-6 text-base font-medium glass-card hover:bg-secondary/50">
+                  Book an Event
+                </Button>
+              </SignInButton>
+            </div>
+
+            {/* Quick Benefits */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-8">
+              {[
+                "Unlimited scheduling events",
+                "Google & Outlook integration",
+                "Custom availability windows",
+                "Timezone conflict resolution"
+              ].map((benefit, idx) => (
+                <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <CheckCircle2 aria-hidden="true" className="size-4.5 text-primary shrink-0" />
+                  <span>{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Visual Sandbox Mockup */}
+          <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end">
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-indigo-500 opacity-20 blur-xl animate-pulse" />
+            <Card className="w-full max-w-[400px] glass-card border-border/40 relative overflow-hidden animate-float">
+              {/* Decorative gradient blur */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/20 blur-2xl rounded-full" />
+              
+              <CardHeader className="border-b border-border/40 pb-5">
+                <div className="flex justify-between items-start">
+                  <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold border border-primary/20">
+                    Active Preview
+                  </div>
+                  <Clock aria-hidden="true" className="size-5 text-muted-foreground" />
+                </div>
+                <CardTitle className="text-xl font-bold mt-3">Product Demo & QA</CardTitle>
+                <CardDescription className="flex items-center gap-1.5 mt-1">
+                  <Calendar aria-hidden="true" className="size-3.5" />
+                  <span>30-minute availability slot</span>
+                </CardDescription>
+              </CardHeader>
+              
+              <CardContent className="pt-6 space-y-4">
+                <div className="text-sm font-semibold text-muted-foreground">Select a Preferred Time</div>
+                <div className="grid grid-cols-2 gap-2.5">
+                  {["09:00 AM", "10:30 AM", "01:00 PM", "03:30 PM"].map((time, idx) => (
+                    <div 
+                      key={idx} 
+                      className={`text-center py-2.5 rounded-lg text-sm font-medium border transition-all cursor-pointer ${
+                        idx === 1 
+                          ? "bg-primary border-primary text-primary-foreground shadow-md shadow-primary/20 scale-[1.03]" 
+                          : "bg-background/40 border-border/60 text-foreground hover:border-primary hover:bg-primary/5"
+                      }`}
+                    >
+                      {time}
+                    </div>
+                  ))}
+                </div>
+                <div className="rounded-lg bg-secondary/30 border border-border/40 p-3 mt-4 text-xs text-muted-foreground flex gap-2">
+                  <CheckCircle2 aria-hidden="true" className="size-4.5 text-primary shrink-0 mt-0.5" />
+                  <span>Automatically synced with your time zones to avoid overlaps.</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </Card>
+      </main>
+
+      {/* Footer */}
+      <footer className="py-6 border-t border-border/40 bg-background/50">
+        <div className="container flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
+          <p>© {new Date().getFullYear()} Evently Inc. All rights reserved.</p>
+          <div className="flex gap-4">
+            <span className="hover:text-foreground cursor-pointer">Privacy Policy</span>
+            <span className="hover:text-foreground cursor-pointer">Terms of Service</span>
+            <span className="hover:text-foreground cursor-pointer">Security</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

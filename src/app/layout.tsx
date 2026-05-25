@@ -21,15 +21,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <ClerkProvider
+      appearance={{
+        variables: {
+          colorPrimary: "hsl(262, 83%, 58%)",
+        },
+      }}
+    >
+      <html lang="en" className="dark">
         <body
-          className={cn
-            ("min-h-screen bg-background font-sans antialiased", geistSans.variable)}
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased relative",
+            geistSans.variable
+          )}
         >
-          {children}
+          {/* Global decorative background elements */}
+          <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+            <div className="absolute inset-0 grid-bg opacity-30" />
+            <div className="absolute inset-0 mesh-glow-1 opacity-70" />
+            <div className="absolute inset-0 mesh-glow-2 opacity-50" />
+          </div>
+
+          <div className="relative z-10 min-h-screen flex flex-col">
+            {children}
+          </div>
         </body>
-      </html >
+      </html>
     </ClerkProvider>
   );
 }
