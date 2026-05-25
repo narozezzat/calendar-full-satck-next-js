@@ -20,41 +20,49 @@
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    --border: 240 6% 83%;
+    --input: 240 6% 83%;
     --ring: 262 83% 58%;
     --radius: 0.75rem;
 
-    /* Responsive premium visual colors */
-    --grid-color: rgba(99, 102, 241, 0.06);
-    --mesh-color-1: rgba(139, 92, 246, 0.08);
-    --mesh-color-2: rgba(99, 102, 241, 0.04);
+    /* Premium Light Mode Grid & Glows */
+    --grid-color: rgba(99, 102, 241, 0.04);
+    --mesh-color-1: rgba(139, 92, 246, 0.06);
+    --mesh-color-2: rgba(99, 102, 241, 0.03);
+    --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+    --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.7));
   }
 
   .dark {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 6%;
-    --popover-foreground: 0 0% 98%;
+    /* Sleek space navy/obsidian theme */
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+    --card: 224 71% 6%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71% 6%;
+    --popover-foreground: 210 40% 98%;
     --primary: 263 90% 65%;
-    --primary-foreground: 240 10% 4%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --primary-foreground: 224 71% 4%;
+    --secondary: 224 50% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 224 50% 10%;
+    --muted-foreground: 217.2 25% 65%;
+    --accent: 224 50% 12%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Optimized dark mode borders for high contrast (lightness 20% instead of 12%) */
+    --border: 224 25% 20%;
+    --input: 224 25% 20%;
     --ring: 263 90% 65%;
 
-    --grid-color: rgba(139, 92, 246, 0.12);
+    /* Premium Dark Mode Grid & Glows */
+    --grid-color: rgba(139, 92, 246, 0.09);
     --mesh-color-1: rgba(139, 92, 246, 0.16);
-    --mesh-color-2: rgba(99, 102, 241, 0.08);
+    --mesh-color-2: rgba(99, 102, 241, 0.10);
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --glass-card-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.75), rgba(9, 15, 30, 0.8));
   }
 }
 
@@ -76,7 +84,9 @@
 }
 
 .mesh-glow-1 {
-  background: radial-gradient(circle 600px at 50% -100px, var(--mesh-color-1), transparent);
+  background: 
+    radial-gradient(circle 800px at 50% -200px, var(--mesh-color-1), transparent),
+    radial-gradient(circle 600px at 10% 300px, rgba(99, 102, 241, 0.05), transparent);
 }
 
 .mesh-glow-2 {
@@ -84,12 +94,25 @@
 }
 
 .glass-card {
-  @apply bg-card/60 backdrop-blur-md border border-border/40 shadow-xl;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
+  background: var(--glass-card-bg);
+  backdrop-filter: blur(16px);
+  @apply border border-border rounded-2xl;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-card-glow {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-card-glow:hover {
+  transform: translateY(-3px);
+  @apply border-primary/40;
+  box-shadow: var(--card-shadow), 0 0 22px rgba(139, 92, 246, 0.15);
 }
 
 .glass-header {
-  @apply sticky top-0 z-50 backdrop-blur-lg bg-background/70 border-b border-border/40;
+  @apply sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border;
 }
 
 .animate-float {

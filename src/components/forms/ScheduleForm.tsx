@@ -108,7 +108,7 @@ export function ScheduleForm({
                             </FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
-                                    <SelectTrigger className="h-10 bg-background/50 border-border/60 focus:ring-primary/30">
+                                    <SelectTrigger className="h-10 bg-background/50 border-input hover:border-muted-foreground/40 focus:ring-primary/30">
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
@@ -133,17 +133,17 @@ export function ScheduleForm({
                         {DAYS_OF_WEEK_IN_ORDER.map(dayOfWeek => {
                             const daySlots = groupedAvailabilityFields[dayOfWeek] || [];
                             return (
-                                <div key={dayOfWeek} className="flex flex-col sm:flex-row sm:items-start gap-3 p-3.5 rounded-xl border border-border/30 bg-secondary/10 hover:border-border/60 transition-all">
+                                <div key={dayOfWeek} className="flex flex-col sm:flex-row sm:items-start gap-4 p-4 rounded-xl border border-border bg-card/45 hover:bg-card/75 transition-all shadow-sm">
 
                                     {/* Weekday badge block */}
                                     <div className="flex items-center justify-between sm:justify-start gap-3 w-full sm:w-28 shrink-0 pt-1">
-                                        <span className="uppercase text-xs font-extrabold tracking-wider text-foreground bg-primary/10 border border-primary/20 rounded px-2.5 py-1 text-center w-16">
+                                        <span className="uppercase text-xs font-extrabold tracking-wider text-foreground bg-primary/10 border border-primary/20 rounded px-2.5 py-1 text-center w-16 select-none shadow-sm">
                                             {dayOfWeek.substring(0, 3)}
                                         </span>
                                         <Button
                                             type="button"
                                             size="icon"
-                                            className="size-7 rounded-lg bg-background hover:bg-primary/10 hover:text-primary transition-all border border-border/50"
+                                            className="size-7 rounded-lg bg-secondary border border-border/60 hover:bg-primary hover:border-primary text-secondary-foreground hover:text-primary-foreground transition-all flex items-center justify-center shadow-sm"
                                             onClick={() => {
                                                 addAvailability({
                                                     dayOfWeek,
@@ -153,14 +153,18 @@ export function ScheduleForm({
                                             }}
                                             aria-label={`Add slot for ${dayOfWeek}`}
                                         >
-                                            <Plus aria-hidden="true" className="size-4" />
+                                            <Plus aria-hidden="true" className="size-4.5" />
                                         </Button>
                                     </div>
 
                                     {/* Availability time inputs list */}
                                     <div className="flex-1 flex flex-col gap-2.5">
                                         {daySlots.length === 0 ? (
-                                            <span className="text-xs text-muted-foreground pt-1.5 italic">Unavailable</span>
+                                            <div className="flex items-center pt-1">
+                                                <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground bg-secondary/80 px-2.5 py-1 rounded border border-border/50 select-none">
+                                                    Unavailable
+                                                </span>
+                                            </div>
                                         ) : (
                                             daySlots.map((field, labelIndex) => (
                                                 <div className="flex flex-col gap-1" key={field.id}>
@@ -172,7 +176,7 @@ export function ScheduleForm({
                                                                 <FormItem>
                                                                     <FormControl>
                                                                         <Input
-                                                                            className="w-24 h-9 text-center bg-background/50 border-border/60 focus-visible:ring-primary/20 text-sm font-medium"
+                                                                            className="w-24 h-9 text-center bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 text-sm font-medium"
                                                                             placeholder="09:00"
                                                                             aria-label={`${dayOfWeek} Start Time ${labelIndex + 1}`}
                                                                             {...field}
@@ -189,7 +193,7 @@ export function ScheduleForm({
                                                                 <FormItem>
                                                                     <FormControl>
                                                                         <Input
-                                                                            className="w-24 h-9 text-center bg-background/50 border-border/60 focus-visible:ring-primary/20 text-sm font-medium"
+                                                                            className="w-24 h-9 text-center bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 text-sm font-medium"
                                                                             placeholder="17:00"
                                                                             aria-label={`${dayOfWeek} End Time ${labelIndex + 1}`}
                                                                             {...field}
@@ -202,7 +206,7 @@ export function ScheduleForm({
                                                             type="button"
                                                             size="icon"
                                                             variant="destructiveGhost"
-                                                            className="size-8 rounded-lg border border-destructive/20 bg-background/40 hover:bg-destructive hover:text-destructive-foreground transition-all"
+                                                            className="size-8 rounded-lg border border-destructive/20 bg-destructive/15 hover:bg-destructive hover:text-destructive-foreground text-destructive transition-all"
                                                             onClick={() => removeAvailability(field.index)}
                                                             aria-label={`Remove slot ${labelIndex + 1} for ${dayOfWeek}`}
                                                         >

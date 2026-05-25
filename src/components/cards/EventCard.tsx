@@ -18,7 +18,7 @@ export default function EventCard({
 }: EventCardProps): React.JSX.Element {
     return (
         <Card className={cn(
-            "flex flex-col glass-card hover:shadow-2xl hover:border-primary/30 transition-all duration-300 relative group overflow-hidden",
+            "flex flex-col glass-card hover-card-glow relative group overflow-hidden",
             !isActive && "border-secondary/30 opacity-75 hover:opacity-100"
         )}>
             {/* Pulsing indicator or inactive indicator */}

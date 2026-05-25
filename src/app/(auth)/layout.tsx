@@ -4,6 +4,7 @@ import * as React from "react";
 import { ReactNode } from "react";
 import { CalendarRange, Sparkles, CheckCircle2, ShieldCheck, Zap } from "lucide-react";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function AuthLayout({ children }: { children: ReactNode }): React.JSX.Element {
   const { userId } = auth();
@@ -11,6 +12,11 @@ export default function AuthLayout({ children }: { children: ReactNode }): React
 
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-12 relative overflow-hidden">
+      
+      {/* Theme Toggle */}
+      <div className="absolute top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
       
       {/* Decorative Blur Backgrounds */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />

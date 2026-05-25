@@ -5,6 +5,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import * as React from "react"
 import { db } from "@/drizzle/db"
 import { formatDateTime } from "@/lib/formatters"
 import { clerkClient } from "@clerk/nextjs/server"
@@ -19,7 +20,7 @@ export default async function SuccessPage({
 }: {
     params: { clerkUserId: string; eventId: string }
     searchParams: { startTime: string }
-}) {
+}): Promise<React.JSX.Element> {
     const event = await db.query.EventTable.findFirst({
         where: ({ clerkUserId: userIdCol, isActive, id }, { eq, and }) =>
             and(eq(isActive, true), eq(userIdCol, clerkUserId), eq(id, eventId)),
@@ -31,22 +32,24 @@ export default async function SuccessPage({
     const startTimeDate = new Date(startTime)
 
     return (
-        <Card className="max-w-xl mx-auto text-center">
-            <CardHeader>
-                <div className="flex justify-center mb-2">
+        <div className="flex-grow flex flex-col justify-center items-center w-full">
+            <Card className="max-w-xl w-full text-center glass-card">
+                <CardHeader>
+                    <div className="flex justify-center mb-2">
+                        <CardTitle>
+                            <CircleCheck color="#009A51" size={52} />
+                        </CardTitle>
+                    </div>
                     <CardTitle>
-                        <CircleCheck color="#009A51" size={52} />
+                        Successfully Booked {event.name} with {calendarUser.fullName}
                     </CardTitle>
-                </div>
-                <CardTitle>
-                    Successfully Booked {event.name} with {calendarUser.fullName}
-                </CardTitle>
-                <CardDescription>{formatDateTime(startTimeDate)}</CardDescription>
-            </CardHeader>
-            <CardContent>
-                You should receive an email confirmation shortly. You can safely close
-                this page now.
-            </CardContent>
-        </Card>
+                    <CardDescription>{formatDateTime(startTimeDate)}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    You should receive an email confirmation shortly. You can safely close
+                    this page now.
+                </CardContent>
+            </Card>
+        </div>
     )
 }

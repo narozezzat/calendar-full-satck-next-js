@@ -77,7 +77,7 @@ export function EventForm({ event }: {
                             <FormControl>
                                 <Input 
                                     placeholder="e.g., Intro Sync, Technical Interview" 
-                                    className="h-10 border-border/60 bg-background/50 focus-visible:ring-primary/30 focus-visible:border-primary"
+                                    className="h-10 border-input bg-background/50 hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                     {...field} 
                                 />
                             </FormControl>
@@ -100,7 +100,7 @@ export function EventForm({ event }: {
                                     type="number" 
                                     min={1}
                                     placeholder="30"
-                                    className="h-10 border-border/60 bg-background/50 focus-visible:ring-primary/30 focus-visible:border-primary"
+                                    className="h-10 border-input bg-background/50 hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                     {...field} 
                                 />
                             </FormControl>
@@ -121,7 +121,7 @@ export function EventForm({ event }: {
                             <FormControl>
                                 <Textarea 
                                     placeholder="Write a brief overview of what this meeting is about..." 
-                                    className="resize-none h-28 border-border/60 bg-background/50 focus-visible:ring-primary/30 focus-visible:border-primary"
+                                    className="resize-none h-28 border-input bg-background/50 hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                     {...field} 
                                 />
                             </FormControl>
@@ -172,7 +172,7 @@ export function EventForm({ event }: {
                                         Delete
                                     </Button>
                                 </AlertDialogTrigger>
-                                <AlertDialogContent className="glass-card max-w-sm rounded-2xl border-border/50">
+                                <AlertDialogContent className="glass-card max-w-sm rounded-2xl border-border">
                                     <AlertDialogHeader>
                                         <AlertDialogTitle className="font-bold text-lg">Are you sure?</AlertDialogTitle>
                                         <AlertDialogDescription className="text-sm text-muted-foreground">

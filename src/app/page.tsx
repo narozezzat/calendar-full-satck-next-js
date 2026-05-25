@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { CalendarRange, Sparkles, CheckCircle2, Clock, Calendar, ArrowRight } from "lucide-react";
 import * as React from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function HomePage(): React.JSX.Element {
   const { userId } = auth();
@@ -22,6 +23,7 @@ export default function HomePage(): React.JSX.Element {
             <span>Evently</span>
           </div>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <SignInButton mode="modal">
               <Button variant="ghost" className="text-sm font-medium hover:bg-primary/5 hover:text-primary">
                 Sign In

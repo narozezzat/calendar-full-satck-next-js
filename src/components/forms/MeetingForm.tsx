@@ -104,7 +104,7 @@ export function MeetingForm({
                             </FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
-                                    <SelectTrigger className="h-10 bg-background/50 border-border/60 focus:ring-primary/30">
+                                    <SelectTrigger className="h-10 bg-background/50 border-input hover:border-muted-foreground/40 focus:ring-primary/30">
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
@@ -141,7 +141,7 @@ export function MeetingForm({
                                             <Button
                                                 variant="outline"
                                                 className={cn(
-                                                    "h-10 pl-3 text-left font-normal flex w-full bg-background/50 border-border/60 hover:bg-secondary/40",
+                                                    "h-10 pl-3 text-left font-normal flex w-full bg-background/50 border-input hover:border-muted-foreground/40 hover:bg-secondary/40",
                                                     !field.value && "text-muted-foreground"
                                                 )}
                                             >
@@ -154,7 +154,7 @@ export function MeetingForm({
                                             </Button>
                                         </FormControl>
                                     </PopoverTrigger>
-                                    <PopoverContent className="w-auto p-0 border-border/50 glass-card rounded-xl shadow-2xl" align="start">
+                                    <PopoverContent className="w-auto p-0 border-border glass-card rounded-xl shadow-2xl" align="start">
                                         <Calendar
                                             mode="single"
                                             selected={field.value}
@@ -189,12 +189,12 @@ export function MeetingForm({
                                 </FormLabel>
                                 <div className="min-h-[100px] flex-1">
                                     {date == null ? (
-                                        <div className="flex flex-col items-center justify-center h-full border border-dashed border-border/60 rounded-xl p-4 text-center bg-secondary/10">
+                                        <div className="flex flex-col items-center justify-center h-full border border-dashed border-border rounded-xl p-4 text-center bg-secondary/10">
                                             <CalendarIcon aria-hidden="true" className="size-5 text-muted-foreground/60 mb-1.5" />
                                             <span className="text-xs text-muted-foreground font-semibold">Select a date first</span>
                                         </div>
                                     ) : availableSlotsForDay.length === 0 ? (
-                                        <div className="flex flex-col items-center justify-center h-full border border-dashed border-border/60 rounded-xl p-4 text-center bg-secondary/10">
+                                        <div className="flex flex-col items-center justify-center h-full border border-dashed border-border rounded-xl p-4 text-center bg-secondary/10">
                                             <span className="text-xs text-muted-foreground font-semibold">No available slots</span>
                                         </div>
                                     ) : (
@@ -210,7 +210,7 @@ export function MeetingForm({
                                                             "h-9 text-xs font-semibold rounded-lg transition-all",
                                                             isSelected 
                                                                 ? "shadow-md shadow-primary/20 scale-[1.02] bg-primary text-primary-foreground border-primary" 
-                                                                : "bg-background/40 hover:bg-primary/5 hover:border-primary/50 text-foreground"
+                                                                : "bg-background/40 border-input hover:border-primary/50 text-foreground"
                                                         )}
                                                         onClick={() => field.onChange(time)}
                                                     >
@@ -244,7 +244,7 @@ export function MeetingForm({
                                     <FormControl>
                                         <Input 
                                             placeholder="Your Name" 
-                                            className="h-10 bg-background/50 border-border/60 focus-visible:ring-primary/20 focus-visible:border-primary"
+                                            className="h-10 bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                             {...field} 
                                         />
                                     </FormControl>
@@ -265,7 +265,7 @@ export function MeetingForm({
                                         <Input 
                                             type="email" 
                                             placeholder="you@example.com" 
-                                            className="h-10 bg-background/50 border-border/60 focus-visible:ring-primary/20 focus-visible:border-primary"
+                                            className="h-10 bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                             {...field} 
                                         />
                                     </FormControl>
@@ -287,7 +287,7 @@ export function MeetingForm({
                                 <FormControl>
                                     <Textarea 
                                         placeholder="Add details, topics, or requests..." 
-                                        className="resize-none h-24 bg-background/50 border-border/60 focus-visible:ring-primary/20 focus-visible:border-primary"
+                                        className="resize-none h-24 bg-background/50 border-input hover:border-muted-foreground/40 focus-visible:ring-primary/20 focus-visible:border-primary"
                                         {...field} 
                                     />
                                 </FormControl>

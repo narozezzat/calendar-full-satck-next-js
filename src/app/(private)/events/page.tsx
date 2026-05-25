@@ -19,12 +19,12 @@ export default async function EventsPage(): Promise<React.JSX.Element> {
     });
 
     return (
-        <div className="space-y-8 max-w-7xl mx-auto px-4 md:px-6">
-            
+        <div className="space-y-8">
+
             {/* Header Area */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/40 pb-6">
                 <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-muted-foreground">
+                    <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-muted-foreground">
                         Your Events
                     </h1>
                     <p className="text-sm text-muted-foreground mt-1.5">
@@ -49,7 +49,7 @@ export default async function EventsPage(): Promise<React.JSX.Element> {
             ) : (
                 <div className="py-12 flex justify-center">
                     <div className="w-full max-w-lg glass-card border-dashed border-2 border-border/60 rounded-2xl p-10 text-center flex flex-col items-center gap-6 relative overflow-hidden">
-                        
+
                         {/* Glowing backdrop decorator */}
                         <div className="absolute -top-12 -left-12 w-28 h-28 bg-primary/10 rounded-full blur-xl" />
                         <div className="absolute -bottom-12 -right-12 w-28 h-28 bg-indigo-500/10 rounded-full blur-xl" />
@@ -71,7 +71,7 @@ export default async function EventsPage(): Promise<React.JSX.Element> {
 
                         <Button size="lg" className="shadow-lg shadow-primary/20 font-semibold mt-2" asChild>
                             <Link href="/events/new" className="flex items-center gap-2">
-                                <CalendarPlus aria-hidden="true" className="size-5" /> 
+                                <CalendarPlus aria-hidden="true" className="size-5" />
                                 <span>Create Event Template</span>
                             </Link>
                         </Button>

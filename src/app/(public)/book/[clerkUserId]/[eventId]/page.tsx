@@ -1,5 +1,6 @@
 import { MeetingForm } from "@/components/forms/MeetingForm"
 import { Button } from "@/components/ui/button"
+import * as React from "react"
 import {
     Card,
     CardContent,
@@ -26,7 +27,7 @@ export default async function BookEventPage({
     params: { clerkUserId, eventId },
 }: {
     params: { clerkUserId: string; eventId: string }
-}) {
+}): Promise<React.JSX.Element> {
     const event = await db.query.EventTable.findFirst({
         where: ({ clerkUserId: userIdCol, isActive, id }, { eq, and }) =>
             and(eq(isActive, true), eq(userIdCol, clerkUserId), eq(id, eventId)),
@@ -51,23 +52,25 @@ export default async function BookEventPage({
     }
 
     return (
-        <Card className="max-w-4xl mx-auto">
-            <CardHeader>
-                <CardTitle>
-                    Book {event.name} with {calendarUser.fullName}
-                </CardTitle>
-                {event.description && (
-                    <CardDescription>{event.description}</CardDescription>
-                )}
-            </CardHeader>
-            <CardContent>
-                <MeetingForm
-                    validTimes={validTimes}
-                    eventId={event.id}
-                    clerkUserId={clerkUserId}
-                />
-            </CardContent>
-        </Card>
+        <div className="flex-grow flex flex-col justify-center items-center w-full">
+            <Card className="max-w-4xl w-full glass-card">
+                <CardHeader>
+                    <CardTitle>
+                        Book {event.name} with {calendarUser.fullName}
+                    </CardTitle>
+                    {event.description && (
+                        <CardDescription>{event.description}</CardDescription>
+                    )}
+                </CardHeader>
+                <CardContent>
+                    <MeetingForm
+                        validTimes={validTimes}
+                        eventId={event.id}
+                        clerkUserId={clerkUserId}
+                    />
+                </CardContent>
+            </Card>
+        </div>
     )
 }
 
@@ -77,26 +80,28 @@ function NoTimeSlots({
 }: {
     event: { name: string; description: string | null }
     calendarUser: { id: string; fullName: string | null }
-}) {
+}): React.JSX.Element {
     return (
-        <Card className="max-w-md mx-auto">
-            <CardHeader>
-                <CardTitle>
-                    Book {event.name} with {calendarUser.fullName}
-                </CardTitle>
-                {event.description && (
-                    <CardDescription>{event.description}</CardDescription>
-                )}
-            </CardHeader>
-            <CardContent>
-                {calendarUser.fullName} is currently booked up. Please check back later
-                or choose a shorter event.
-            </CardContent>
-            <CardFooter>
-                <Button className="w-full" asChild>
-                    <Link href={`/book/${calendarUser.id}`}>Choose Another Event</Link>
-                </Button>
-            </CardFooter>
-        </Card>
+        <div className="flex-grow flex flex-col justify-center items-center w-full">
+            <Card className="max-w-md w-full glass-card">
+                <CardHeader>
+                    <CardTitle>
+                        Book {event.name} with {calendarUser.fullName}
+                    </CardTitle>
+                    {event.description && (
+                        <CardDescription>{event.description}</CardDescription>
+                    )}
+                </CardHeader>
+                <CardContent>
+                    {calendarUser.fullName} is currently booked up. Please check back later
+                    or choose a shorter event.
+                </CardContent>
+                <CardFooter>
+                    <Button className="w-full" asChild>
+                        <Link href={`/book/${calendarUser.id}`}>Choose Another Event</Link>
+                    </Button>
+                </CardFooter>
+            </Card>
+        </div>
     )
 }

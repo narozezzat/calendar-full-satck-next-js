@@ -3,7 +3,8 @@ const nextConfig = {
     experimental: {
         staleTimes: {
             dynamic: 0,
-        }
+        },
+        serverComponentsExternalPackages: ["googleapis"],
     }
 };
 

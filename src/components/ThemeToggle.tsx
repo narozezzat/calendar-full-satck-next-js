@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Sun, Moon } from "lucide-react"
 
 export function ThemeToggle(): React.JSX.Element {
-  const { theme, setTheme } = useTheme()
+  const { setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
 
   // Avoid hydration mismatch by rendering a placeholder until mounted
@@ -27,7 +27,7 @@ export function ThemeToggle(): React.JSX.Element {
     )
   }
 
-  const isDark = theme === "dark"
+  const isDark = resolvedTheme === "dark"
 
   return (
     <Button

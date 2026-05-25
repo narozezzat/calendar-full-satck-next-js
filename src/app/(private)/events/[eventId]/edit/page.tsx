@@ -22,7 +22,7 @@ export default async function EditEventPage({
     if (event == null) return notFound()
 
     return (
-        <Card className="max-w-md mx-auto">
+        <Card className="max-w-md mx-auto glass-card">
             <CardHeader>
                 <CardTitle>Edit Event</CardTitle>
             </CardHeader>
