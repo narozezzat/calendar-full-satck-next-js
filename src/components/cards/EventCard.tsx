@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { formatEventDescription } from "@/lib/formatters";
 import { EventCardProps } from "@/types/eventTypes";
-import { Clock, EyeOff, Edit } from "lucide-react";
+import { Clock, EyeOff, Edit, ExternalLink } from "lucide-react";
 import * as React from "react";
 
 export default function EventCard({
@@ -53,13 +53,31 @@ export default function EventCard({
 
             <CardFooter className="flex justify-end gap-2.5 pt-4 mt-auto border-t border-border/40 bg-secondary/10">
                 {isActive ? (
-                    <CopyEventButton
-                        variant="outline"
-                        size="sm"
-                        eventId={id}
-                        clerkUserId={clerkUserId}
-                        className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
-                    />
+                    <>
+                        <CopyEventButton
+                            variant="outline"
+                            size="sm"
+                            eventId={id}
+                            clerkUserId={clerkUserId}
+                            className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
+                        />
+                        <Button
+                            asChild
+                            variant="outline"
+                            size="sm"
+                            className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
+                        >
+                            <Link
+                                href={`/book/${clerkUserId}/${id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1.5"
+                            >
+                                <ExternalLink aria-hidden="true" className="size-3.5" />
+                                <span>Preview</span>
+                            </Link>
+                        </Button>
+                    </>
                 ) : null}
                 <Button size="sm" asChild className="h-9 text-xs font-semibold shadow-sm">
                     <Link href={`/events/${id}/edit`} className="flex items-center gap-1.5">
