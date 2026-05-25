@@ -16,12 +16,12 @@ export default function HomePage() {
           <p className="text-gray-400 text-sm">Welcome to Evently!</p>
         </div>
         <div className="flex px-4 py-8 flex-col gap-4">
-          <Button asChild>
-            <SignInButton />
-          </Button>
-          <Button asChild>
-            <SignUpButton />
-          </Button>
+          <SignInButton>
+            <Button className="w-full">Sign In</Button>
+          </SignInButton>
+          <SignUpButton>
+            <Button className="w-full" variant="outline">Sign Up</Button>
+          </SignUpButton>
         </div>
       </Card>
     </div>
