@@ -37,7 +37,7 @@ export default function RootLayout({
             geistSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             {/* Global decorative background elements */}
             <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
               <div className="absolute inset-0 grid-bg opacity-30" />
