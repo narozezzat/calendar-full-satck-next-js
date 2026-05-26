@@ -14,21 +14,25 @@ export function CopyEventButton({ eventId, clerkUserId, ...buttonProps }: Omit<B
     const [copyState, setCopyState] = useState<CopyState>("idle")
 
     const CopyIcon = getCopyIcon(copyState)
+    const label = getChildren(copyState, t)
     return (
-        <Button {...buttonProps} onClick={() => {
-            navigator.clipboard.writeText(`${location.origin}/book/${clerkUserId}/${eventId}`)
-                .then(() => {
-                    setCopyState("copied")
-                    setTimeout(() => setCopyState("idle"), 2000)
-                })
-                .catch(() => {
-                    setCopyState("error")
-                    setTimeout(() => setCopyState("idle"), 2000)
-                })
-
-        }}>
-            <CopyIcon className="size-4 me-2" />
-            {getChildren(copyState, t)}
+        <Button
+            {...buttonProps}
+            aria-label={label}
+            onClick={() => {
+                navigator.clipboard.writeText(`${location.origin}/book/${clerkUserId}/${eventId}`)
+                    .then(() => {
+                        setCopyState("copied")
+                        setTimeout(() => setCopyState("idle"), 2000)
+                    })
+                    .catch(() => {
+                        setCopyState("error")
+                        setTimeout(() => setCopyState("idle"), 2000)
+                    })
+            }}
+        >
+            <CopyIcon aria-hidden="true" className="size-4 sm:me-2" />
+            <span className="hidden sm:inline">{label}</span>
         </Button>
     )
 }

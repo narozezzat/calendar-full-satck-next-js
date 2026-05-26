@@ -56,9 +56,9 @@ export default function EventCard({
                 </CardContent>
             ) : null}
 
-            <CardFooter className="flex justify-between items-center gap-2.5 pt-4 mt-auto border-t border-border/40 bg-secondary/10">
+            <CardFooter className="flex flex-wrap items-center justify-between gap-2 pt-4 mt-auto border-t border-border/40 bg-secondary/10">
                 <DeleteEventButton id={id} />
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-1.5 sm:gap-2 ms-auto">
                     {isActive ? (
                         <>
                             <CopyEventButton
@@ -66,7 +66,7 @@ export default function EventCard({
                                 size="sm"
                                 eventId={id}
                                 clerkUserId={clerkUserId}
-                                className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
+                                className="text-xs h-9 w-9 sm:w-auto px-0 sm:px-3 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
                             />
                             <Button
                                 asChild
