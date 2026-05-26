@@ -38,6 +38,7 @@ import { toZonedTime } from "date-fns-tz"
 import { createMeeting } from "@/server/actions/meetings"
 import { meetingFormSchema } from "@/schema/meetings"
 import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 
 export function MeetingForm({
     validTimes,
@@ -70,6 +71,7 @@ export function MeetingForm({
         })
 
         if (data?.error) {
+            toast.error(t("errorMessage"))
             form.setError("root", {
                 message: t("errorMessage"),
             })

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button, ButtonProps } from "./ui/button";
 import { CheckCheck, Copy, CopyX } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 type CopyState = "idle" | "copied" | "error";
 
@@ -23,10 +24,12 @@ export function CopyEventButton({ eventId, clerkUserId, ...buttonProps }: Omit<B
                 navigator.clipboard.writeText(`${location.origin}/book/${clerkUserId}/${eventId}`)
                     .then(() => {
                         setCopyState("copied")
+                        toast.success(t("copied"))
                         setTimeout(() => setCopyState("idle"), 2000)
                     })
                     .catch(() => {
                         setCopyState("error")
+                        toast.error(t("copyError"))
                         setTimeout(() => setCopyState("idle"), 2000)
                     })
             }}

@@ -23,12 +23,12 @@ import {
 } from "../ui/select"
 import { formatTimezoneOffset } from "@/lib/formatters"
 import * as React from "react"
-import { useState } from "react"
-import { Plus, X, Globe, Save, Check } from "lucide-react"
+import { Plus, X, Globe, Save } from "lucide-react"
 import { Input } from "../ui/input"
 import { saveSchedule } from "@/server/actions/schedule"
 import { scheduleFormSchema } from "@/schema/schedule"
 import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 
 type Availability = {
     startTime: string
@@ -47,7 +47,6 @@ export function ScheduleForm({
     const t = useTranslations("schedule")
     const tDays = useTranslations("days")
     const tCommon = useTranslations("common")
-    const [successMessage, setSuccessMessage] = useState<string>()
     const form = useForm<z.infer<typeof scheduleFormSchema>>({
         resolver: zodResolver(scheduleFormSchema),
         defaultValues: {
@@ -74,12 +73,13 @@ export function ScheduleForm({
         const data = await saveSchedule(values)
 
         if (data?.error) {
+            toast.error(t("errorMessage"))
             form.setError("root", {
                 message: t("errorMessage"),
             })
         } else {
-            setSuccessMessage(t("successMessage"))
-            setTimeout(() => setSuccessMessage(undefined), 3500)
+            toast.success(t("successMessage"))
+            form.reset(values)
         }
     }
 
@@ -92,12 +92,6 @@ export function ScheduleForm({
                 {form.formState.errors.root ? (
                     <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm rounded-lg p-3.5 font-medium">
                         {form.formState.errors.root.message}
-                    </div>
-                ) : null}
-                {successMessage ? (
-                    <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm rounded-lg p-3.5 font-semibold flex items-center gap-2 justify-center">
-                        <Check aria-hidden="true" className="size-4" />
-                        <span>{successMessage}</span>
                     </div>
                 ) : null}
 

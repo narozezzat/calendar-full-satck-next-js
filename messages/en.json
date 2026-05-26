@@ -108,7 +108,10 @@
     "saveButton": "Save Event",
     "saving": "Saving...",
     "errorCreate": "Failed to create event",
-    "errorDelete": "Failed to delete the event."
+    "errorUpdate": "Failed to update event",
+    "errorDelete": "Failed to delete the event.",
+    "createSuccess": "Event created successfully",
+    "updateSuccess": "Event updated successfully"
   },
   "schedule": {
     "title": "Schedule",

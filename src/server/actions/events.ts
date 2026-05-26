@@ -5,15 +5,13 @@ import { EventTable } from "@/drizzle/schema";
 import { eventFormSchema } from "@/schema/events";
 import { auth } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
-import { redirect } from "@/i18n/routing";
 import { revalidatePath } from "next/cache";
 import "use-server";
 import { z } from "zod";
-import { getLocale } from "next-intl/server";
 
 export async function createEvent(
   unsafeData: z.infer<typeof eventFormSchema>
-): Promise<{ error: boolean } | undefined> {
+): Promise<{ error: boolean }> {
   const { userId } = auth();
   const { success, data } = eventFormSchema.safeParse(unsafeData);
 
@@ -23,14 +21,14 @@ export async function createEvent(
 
   await db.insert(EventTable).values({ ...data, clerkUserId: userId });
 
-  const locale = await getLocale();
-  redirect({ href: "/events", locale });
+  revalidatePath("/events");
+  return { error: false };
 }
 
 export async function updateEvent(
   id: string,
   unsafeData: z.infer<typeof eventFormSchema>
-): Promise<{ error: boolean } | undefined> {
+): Promise<{ error: boolean }> {
   const { userId } = auth();
   const { success, data } = eventFormSchema.safeParse(unsafeData);
 
@@ -47,8 +45,8 @@ export async function updateEvent(
     return { error: true };
   }
 
-  const locale = await getLocale();
-  redirect({ href: "/events", locale });
+  revalidatePath("/events");
+  return { error: false };
 }
 
 export async function deleteEvent(

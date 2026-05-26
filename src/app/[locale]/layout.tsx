@@ -3,6 +3,7 @@ import { Cairo } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemedClerkProvider } from "@/components/themed-clerk-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -68,6 +69,7 @@ export default async function LocaleLayout({
               <div className="relative z-10 h-full flex flex-col overflow-hidden">
                 {children}
               </div>
+              <Toaster richColors position="top-center" dir={direction} />
             </ThemedClerkProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

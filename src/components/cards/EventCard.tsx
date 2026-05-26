@@ -51,8 +51,8 @@ export default function EventCard({
             </CardHeader>
 
             {description != null ? (
-                <CardContent className="text-sm text-muted-foreground flex-1 min-h-[60px] line-clamp-3 pb-4">
-                    {description}
+                <CardContent className="text-sm text-muted-foreground flex-1 min-h-[60px] pb-4">
+                    <p className="line-clamp-3 break-words">{description}</p>
                 </CardContent>
             ) : null}
 

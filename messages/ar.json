@@ -108,7 +108,10 @@
     "saveButton": "حفظ الفعالية",
     "saving": "جاري الحفظ...",
     "errorCreate": "فشل في إنشاء الفعالية",
-    "errorDelete": "فشل في حذف الفعالية."
+    "errorUpdate": "فشل في تحديث الفعالية",
+    "errorDelete": "فشل في حذف الفعالية.",
+    "createSuccess": "تم إنشاء الفعالية بنجاح",
+    "updateSuccess": "تم تحديث الفعالية بنجاح"
   },
   "schedule": {
     "title": "الجدول",

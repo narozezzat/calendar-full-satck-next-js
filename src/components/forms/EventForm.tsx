@@ -26,6 +26,7 @@ import {
 } from "../ui/alert-dialog";
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog";
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 export function EventForm({ event }: {
     event?: {
@@ -52,13 +53,17 @@ export function EventForm({ event }: {
     })
 
     async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-        const action = event == null ? createEvent : updateEvent.bind(null, event.id)
+        const isUpdate = event != null
+        const action = isUpdate ? updateEvent.bind(null, event.id) : createEvent
         const data = await action(values);
 
         if (data?.error) {
-            form.setError("root", {
-                message: t("errorCreate"),
-            })
+            const message = isUpdate ? t("errorUpdate") : t("errorCreate")
+            toast.error(message)
+            form.setError("root", { message })
+        } else {
+            toast.success(isUpdate ? t("updateSuccess") : t("createSuccess"))
+            router.push("/events")
         }
     }
 
@@ -197,10 +202,12 @@ export function EventForm({ event }: {
                                                     const data = await deleteEvent(event.id)
 
                                                     if (data?.error) {
+                                                        toast.error(t("errorDelete"))
                                                         form.setError("root", {
                                                             message: t("errorDelete"),
                                                         })
                                                     } else {
+                                                        toast.success(t("deleteSuccessMessage"))
                                                         router.push("/events")
                                                     }
                                                 })
