@@ -239,7 +239,7 @@ export function ScheduleForm({
 
                 <div className="flex gap-2 justify-end pt-4 border-t border-border/40">
                     <Button
-                        disabled={form.formState.isSubmitting}
+                        disabled={form.formState.isSubmitting || !form.formState.isDirty}
                         type="submit"
                         className="shadow-lg shadow-primary/20 font-semibold gap-1.5 h-10 px-5"
                     >

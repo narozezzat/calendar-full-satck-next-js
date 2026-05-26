@@ -220,7 +220,7 @@ export function EventForm({ event }: {
                             <Link href="/events">{t("cancelButton")}</Link>
                         </Button>
                         <Button 
-                            disabled={form.formState.isSubmitting} 
+                            disabled={form.formState.isSubmitting || !form.formState.isDirty}
                             type="submit" 
                             className="h-10 text-xs font-semibold shadow-lg shadow-primary/10"
                         >
