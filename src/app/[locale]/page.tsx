@@ -30,7 +30,8 @@ export default async function HomePage(): Promise<React.JSX.Element> {
         <div className="container flex h-14 sm:h-16 items-center justify-between gap-2">
           <div className="flex items-center gap-2 sm:gap-2.5 font-bold text-lg sm:text-xl tracking-tight min-w-0">
             <div className="size-8 sm:size-10 relative rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-primary/20 shrink-0">
-              <Image src="/logo.png" alt="Evently Logo" fill className="object-cover" priority />
+              <Image src="/logo-vector-light.svg" alt="Evently Logo" fill className="object-cover dark:hidden" priority />
+              <Image src="/logo-vector-dark.svg" alt="Evently Logo" fill className="object-cover hidden dark:block" priority />
             </div>
             <span className="hidden sm:inline truncate">{tc("appName")}</span>
           </div>

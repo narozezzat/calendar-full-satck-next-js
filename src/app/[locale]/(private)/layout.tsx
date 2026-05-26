@@ -28,7 +28,8 @@ export default async function PrivateLayout({ children }: { children: ReactNode 
                             aria-label={tc("appName")}
                         >
                             <div className="size-8 sm:size-10 relative rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-primary/20 transition-all group-hover:shadow-primary/30 group-hover:border-primary/40 shrink-0">
-                                <Image src="/logo.png" alt="Evently Logo" fill className="object-cover" priority />
+                                <Image src="/logo-vector-light.svg" alt="Evently Logo" fill className="object-cover dark:hidden" priority />
+                                <Image src="/logo-vector-dark.svg" alt="Evently Logo" fill className="object-cover hidden dark:block" priority />
                             </div>
                             <span className="inline text-foreground">{tc("appName")}</span>
                         </Link>
