@@ -4,6 +4,7 @@ import { CalendarRange } from "lucide-react";
 import * as React from "react";
 import { ReactNode } from "react";
 import { Link } from "@/i18n/routing";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { getTranslations } from "next-intl/server";
@@ -26,8 +27,8 @@ export default async function PrivateLayout({ children }: { children: ReactNode 
                             className="flex items-center gap-2 font-bold text-lg tracking-tight select-none shrink-0 group"
                             aria-label={tc("appName")}
                         >
-                            <div className="bg-primary/10 p-1.5 sm:p-2 rounded-lg text-primary border border-primary/20 shadow-sm shadow-primary/10 transition-all group-hover:shadow-primary/30 group-hover:border-primary/40">
-                                <CalendarRange aria-hidden="true" className="size-5" />
+                            <div className="size-8 sm:size-10 relative rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-primary/20 transition-all group-hover:shadow-primary/30 group-hover:border-primary/40 shrink-0">
+                                <Image src="/logo.png" alt="Evently Logo" fill className="object-cover" priority />
                             </div>
                             <span className="inline text-foreground">{tc("appName")}</span>
                         </Link>

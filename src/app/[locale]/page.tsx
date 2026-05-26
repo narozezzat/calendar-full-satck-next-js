@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "@/i18n/routing";
 import { CalendarRange, Sparkles, CheckCircle2, Clock, Calendar, ArrowRight, LogIn } from "lucide-react";
 import * as React from "react";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { getTranslations } from "next-intl/server";
@@ -28,8 +29,8 @@ export default async function HomePage(): Promise<React.JSX.Element> {
       <header className="shrink-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
         <div className="container flex h-14 sm:h-16 items-center justify-between gap-2">
           <div className="flex items-center gap-2 sm:gap-2.5 font-bold text-lg sm:text-xl tracking-tight min-w-0">
-            <div className="bg-primary/10 p-1.5 sm:p-2 rounded-lg text-primary border border-primary/20 shadow-sm shadow-primary/10 shrink-0">
-              <CalendarRange aria-hidden="true" className="size-4 sm:size-5" />
+            <div className="size-8 sm:size-10 relative rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-primary/20 shrink-0">
+              <Image src="/logo.png" alt="Evently Logo" fill className="object-cover" priority />
             </div>
             <span className="hidden sm:inline truncate">{tc("appName")}</span>
           </div>
