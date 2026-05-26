@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import { Cairo } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ThemedClerkProvider } from "@/components/themed-clerk-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -46,24 +46,18 @@ export default async function LocaleLayout({
   const localeFontClass = locale === "ar" ? "font-arabic" : "font-sans";
 
   return (
-    <ClerkProvider
-      appearance={{
-        variables: {
-          colorPrimary: "hsl(262, 83%, 58%)",
-        },
-      }}
-    >
-      <html lang={locale} dir={direction} suppressHydrationWarning>
-        <body
-          className={cn(
-            "h-dvh overflow-hidden bg-background antialiased relative",
-            localeFontClass,
-            geistSans.variable,
-            cairo.variable
-          )}
-        >
-          <NextIntlClientProvider messages={messages}>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <html lang={locale} dir={direction} suppressHydrationWarning>
+      <body
+        className={cn(
+          "h-dvh overflow-hidden bg-background antialiased relative",
+          localeFontClass,
+          geistSans.variable,
+          cairo.variable
+        )}
+      >
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <ThemedClerkProvider>
               {/* Global decorative background elements */}
               <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
                 <div className="absolute inset-0 grid-bg opacity-30" />
@@ -74,10 +68,10 @@ export default async function LocaleLayout({
               <div className="relative z-10 h-full flex flex-col overflow-hidden">
                 {children}
               </div>
-            </ThemeProvider>
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+            </ThemedClerkProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
