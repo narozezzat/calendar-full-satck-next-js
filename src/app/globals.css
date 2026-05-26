@@ -71,7 +71,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground selection:bg-primary/20 selection:text-primary min-h-screen relative overflow-x-hidden;
+    @apply bg-background text-foreground selection:bg-primary/20 selection:text-primary min-h-dvh relative overflow-x-hidden;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }

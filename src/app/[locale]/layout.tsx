@@ -56,7 +56,7 @@ export default async function LocaleLayout({
       <html lang={locale} dir={direction} suppressHydrationWarning>
         <body
           className={cn(
-            "h-screen overflow-hidden bg-background antialiased relative",
+            "h-dvh overflow-hidden bg-background antialiased relative",
             localeFontClass,
             geistSans.variable,
             cairo.variable
