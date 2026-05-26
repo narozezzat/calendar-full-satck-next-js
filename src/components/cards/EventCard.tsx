@@ -1,13 +1,14 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CopyEventButton } from "@/components/CopyEventButton";
+import { DeleteEventButton } from "@/components/DeleteEventButton";
 import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/routing";
 import { formatEventDescription } from "@/lib/formatters";
 import { EventCardProps } from "@/types/eventTypes";
 import { Clock, EyeOff, Edit, ExternalLink } from "lucide-react";
 import * as React from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 export default function EventCard({
     id,
@@ -17,7 +18,8 @@ export default function EventCard({
     durationInMinutes,
     clerkUserId,
 }: EventCardProps): React.JSX.Element {
-    const t = useTranslations("common")
+    const t = useTranslations("common");
+    const locale = useLocale();
 
     return (
         <Card className={cn(
@@ -44,7 +46,7 @@ export default function EventCard({
                 </CardTitle>
                 <div className="flex items-center gap-1.5 mt-2 w-fit bg-primary/10 border border-primary/20 text-primary rounded-full px-3 py-0.5 text-xs font-semibold">
                     <Clock aria-hidden="true" className="size-3.5" />
-                    <span>{formatEventDescription(durationInMinutes)}</span>
+                    <span>{formatEventDescription(durationInMinutes, locale)}</span>
                 </div>
             </CardHeader>
 
@@ -54,39 +56,42 @@ export default function EventCard({
                 </CardContent>
             ) : null}
 
-            <CardFooter className="flex justify-end gap-2.5 pt-4 mt-auto border-t border-border/40 bg-secondary/10">
-                {isActive ? (
-                    <>
-                        <CopyEventButton
-                            variant="outline"
-                            size="sm"
-                            eventId={id}
-                            clerkUserId={clerkUserId}
-                            className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
-                        />
-                        <Button
-                            asChild
-                            variant="outline"
-                            size="sm"
-                            className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
-                        >
-                            <Link
-                                href={`/book/${clerkUserId}/${id}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-1.5"
+            <CardFooter className="flex justify-between items-center gap-2.5 pt-4 mt-auto border-t border-border/40 bg-secondary/10">
+                <DeleteEventButton id={id} />
+                <div className="flex items-center gap-2.5">
+                    {isActive ? (
+                        <>
+                            <CopyEventButton
+                                variant="outline"
+                                size="sm"
+                                eventId={id}
+                                clerkUserId={clerkUserId}
+                                className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
+                            />
+                            <Button
+                                asChild
+                                variant="outline"
+                                size="sm"
+                                className="text-xs h-9 bg-background/50 border-border/50 hover:bg-primary/5 hover:text-primary transition-all"
                             >
-                                <ExternalLink aria-hidden="true" className="size-3.5" />
-                                <span>{t("preview")}</span>
-                            </Link>
-                        </Button>
-                    </>
-                ) : null}
-                <Button size="sm" asChild className="h-9 text-xs font-semibold shadow-sm">
-                    <Link href={`/events/${id}/edit`} className="flex items-center gap-1.5">
-                        <Edit aria-hidden="true" className="size-3.5" /> {t("edit")}
-                    </Link>
-                </Button>
+                                <Link
+                                    href={`/book/${clerkUserId}/${id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5"
+                                >
+                                    <ExternalLink aria-hidden="true" className="size-3.5" />
+                                    <span>{t("preview")}</span>
+                                </Link>
+                            </Button>
+                        </>
+                    ) : null}
+                    <Button size="sm" asChild className="h-9 text-xs font-semibold shadow-sm">
+                        <Link href={`/events/${id}/edit`} className="flex items-center gap-1.5">
+                            <Edit aria-hidden="true" className="size-3.5" /> {t("edit")}
+                        </Link>
+                    </Button>
+                </div>
             </CardFooter>
         </Card>
     );

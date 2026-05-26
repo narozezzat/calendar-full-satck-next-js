@@ -21,7 +21,8 @@
     "signUp": "إنشاء حساب",
     "getStarted": "ابدأ الآن",
     "getStartedFree": "ابدأ مجاناً",
-    "bookAnEvent": "احجز موعداً"
+    "bookAnEvent": "احجز موعداً",
+    "continue": "متابعة"
   },
   "landing": {
     "badge": "مساعد الجدولة الذكي",
@@ -101,6 +102,8 @@
     "deleteTitle": "هل أنت متأكد؟",
     "deleteDescription": "هذا الإجراء دائم ولا يمكن التراجع عنه. لن يتمكن الضيوف بعد الآن من جدولة المواعيد لقالب الفعالية هذا.",
     "deleteConfirm": "حذف الفعالية",
+    "deleteSuccessTitle": "تم حذف الفعالية",
+    "deleteSuccessMessage": "تم حذف الفعالية بنجاح من جدولك.",
     "cancelButton": "إلغاء",
     "saveButton": "حفظ الفعالية",
     "saving": "جاري الحفظ...",

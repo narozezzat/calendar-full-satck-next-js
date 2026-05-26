@@ -5,7 +5,7 @@ import { formatEventDescription } from "@/lib/formatters";
 import { clerkClient } from "@clerk/nextjs/server";
 import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { ArrowRight, CalendarRange, Clock, Sparkles } from "lucide-react";
 import * as React from "react";
 
@@ -21,10 +21,11 @@ export default async function BookingPage({ params: {
 
     if (events.length === 0) return notFound()
 
-    const [{ fullName, imageUrl }, t, tc] = await Promise.all([
+    const [{ fullName, imageUrl }, t, tc, locale] = await Promise.all([
         clerkClient().users.getUser(clerkUserId),
         getTranslations("booking"),
         getTranslations("common"),
+        getLocale()
     ])
 
     const initials = (fullName ?? "?")
@@ -76,6 +77,7 @@ export default async function BookingPage({ params: {
                         clerkUserId={clerkUserId}
                         durationInMinutes={event.durationInMinutes}
                         selectLabel={tc("select")}
+                        locale={locale}
                     />
                 ))}
             </div>
@@ -90,6 +92,7 @@ type BookableEventCardProps = {
     description: string | null
     durationInMinutes: number
     selectLabel: string
+    locale: string
 }
 
 function BookableEventCard({
@@ -99,6 +102,7 @@ function BookableEventCard({
     clerkUserId,
     durationInMinutes,
     selectLabel,
+    locale,
 }: BookableEventCardProps): React.JSX.Element {
     return (
         <Card className="flex flex-col glass-card hover-card-glow relative group overflow-hidden">
@@ -110,12 +114,9 @@ function BookableEventCard({
                     {name}
                 </CardTitle>
                 <CardDescription>
-                    <span
-                        dir="ltr"
-                        className="inline-flex items-center gap-1.5 mt-2 w-fit bg-primary/10 border border-primary/20 text-primary rounded-full px-2.5 py-0.5 text-xs font-semibold"
-                    >
+                    <span className="inline-flex items-center gap-1.5 mt-2 w-fit bg-primary/10 border border-primary/20 text-primary rounded-full px-2.5 py-0.5 text-xs font-semibold">
                         <Clock aria-hidden="true" className="size-3.5" />
-                        <span>{formatEventDescription(durationInMinutes)}</span>
+                        <span>{formatEventDescription(durationInMinutes, locale)}</span>
                     </span>
                 </CardDescription>
             </CardHeader>

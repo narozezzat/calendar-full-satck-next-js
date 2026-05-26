@@ -6,6 +6,7 @@ import { eventFormSchema } from "@/schema/events";
 import { auth } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { redirect } from "@/i18n/routing";
+import { revalidatePath } from "next/cache";
 import "use-server";
 import { z } from "zod";
 import { getLocale } from "next-intl/server";
@@ -52,7 +53,7 @@ export async function updateEvent(
 
 export async function deleteEvent(
   id: string
-): Promise<{ error: boolean } | undefined> {
+): Promise<{ error: boolean }> {
   const { userId } = auth();
 
   if (userId == null) {
@@ -67,6 +68,6 @@ export async function deleteEvent(
     return { error: true };
   }
 
-  const locale = await getLocale();
-  redirect({ href: "/events", locale });
+  revalidatePath("/events");
+  return { error: false };
 }

@@ -21,7 +21,8 @@
     "signUp": "Sign Up",
     "getStarted": "Get Started",
     "getStartedFree": "Get Started Free",
-    "bookAnEvent": "Book an Event"
+    "bookAnEvent": "Book an Event",
+    "continue": "Continue"
   },
   "landing": {
     "badge": "Modern Scheduling Assistant",
@@ -101,6 +102,8 @@
     "deleteTitle": "Are you sure?",
     "deleteDescription": "This action is permanent and cannot be undone. Guests will no longer be able to schedule slots for this event template.",
     "deleteConfirm": "Delete Event",
+    "deleteSuccessTitle": "Event Deleted",
+    "deleteSuccessMessage": "The event has been successfully deleted from your schedule.",
     "cancelButton": "Cancel",
     "saveButton": "Save Event",
     "saving": "Saving...",

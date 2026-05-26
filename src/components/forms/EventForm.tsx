@@ -7,7 +7,7 @@ import { eventFormSchema } from "@/schema/events";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { createEvent, deleteEvent, updateEvent } from "@/server/actions/events";
@@ -37,13 +37,18 @@ export function EventForm({ event }: {
     }
 }): React.JSX.Element {
     const t = useTranslations("eventForm")
+    const router = useRouter()
     const [isDeletingPending, startDeleteTransition] = useTransition()
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
-        defaultValues: event ?? {
-            isActive: true,
-            durationInMinutes: 30
-        },
+        defaultValues: event
+            ? { ...event, description: event.description ?? "" }
+            : {
+                  name: "",
+                  description: "",
+                  isActive: true,
+                  durationInMinutes: 30,
+              },
     })
 
     async function onSubmit(values: z.infer<typeof eventFormSchema>) {
@@ -195,6 +200,8 @@ export function EventForm({ event }: {
                                                         form.setError("root", {
                                                             message: t("errorDelete"),
                                                         })
+                                                    } else {
+                                                        router.push("/events")
                                                     }
                                                 })
                                             }}
