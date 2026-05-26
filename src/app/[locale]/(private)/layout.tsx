@@ -1,6 +1,5 @@
 import { NavLink } from "@/components/NavLink";
 import { UserButton } from "@clerk/nextjs";
-import { CalendarRange } from "lucide-react";
 import * as React from "react";
 import { ReactNode } from "react";
 import { Link } from "@/i18n/routing";
