@@ -68,8 +68,10 @@ export default async function HomePage(): Promise<React.JSX.Element> {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <main className="flex-1 overflow-y-auto lg:flex lg:items-center">
+      {/* Scrollable Content Wrapper */}
+      <div className="flex-1 overflow-y-auto flex flex-col no-scrollbar">
+        {/* Hero Section */}
+        <main className="flex-1 lg:flex lg:items-center">
         <div className="container py-12 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Text */}
           <div className="lg:col-span-7 flex flex-col space-y-6 text-start">
@@ -174,6 +176,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

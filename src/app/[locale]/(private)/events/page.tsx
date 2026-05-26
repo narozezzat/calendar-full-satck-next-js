@@ -23,22 +23,42 @@ export default async function EventsPage(): Promise<React.JSX.Element> {
     return (
         <div className="space-y-8">
 
-            {/* Header Area */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/40 pb-6">
-                <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-muted-foreground">
-                        {t("title")}
-                    </h1>
-                    <p className="text-sm text-muted-foreground mt-1.5">
-                        {t("description")}
-                    </p>
+            {/* Ultra Premium Dashboard Header */}
+            <div className="relative mb-10">
+                {/* Subtle glowing ambient background */}
+                <div className="absolute -top-10 -start-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10 opacity-70 dark:opacity-40 pointer-events-none" />
+                
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-background/60 dark:bg-card/40 border border-border/50 p-6 sm:p-8 rounded-3xl shadow-sm backdrop-blur-xl relative overflow-hidden">
+                    
+                    {/* Decorative glass reflection */}
+                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    
+                    <div className="space-y-2 z-10">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2.5 bg-primary/10 rounded-xl text-primary ring-1 ring-primary/20 shadow-inner">
+                                <CalendarRange aria-hidden="true" className="size-6" />
+                            </div>
+                            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                                {t("title")}
+                            </h1>
+                        </div>
+                        <p className="text-sm text-muted-foreground max-w-lg leading-relaxed ms-1 sm:ms-14">
+                            {t("description")}
+                        </p>
+                    </div>
+                    
+                    <Button 
+                        asChild 
+                        className="w-full sm:w-auto shadow-xl shadow-primary/25 bg-gradient-to-br from-primary to-indigo-600 hover:from-primary/95 hover:to-indigo-500 text-white font-semibold h-12 px-6 rounded-xl transition-all hover:-translate-y-0.5 active:scale-95 group relative overflow-hidden z-10 border border-primary/20"
+                    >
+                        <Link href="/events/new" className="flex items-center justify-center gap-2">
+                            {/* Shimmer reflection */}
+                            <div className="absolute inset-0 w-1/4 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+                            <CalendarPlus aria-hidden="true" className="size-5 transition-transform group-hover:rotate-12" />
+                            <span className="text-base sm:text-sm">{t("newEvent")}</span>
+                        </Link>
+                    </Button>
                 </div>
-                <Button asChild className="shadow-lg shadow-primary/20 bg-primary hover:bg-primary/95 text-primary-foreground font-semibold shrink-0 group">
-                    <Link href="/events/new" className="flex items-center gap-2">
-                        <CalendarPlus aria-hidden="true" className="size-4.5 transition-transform group-hover:scale-110" />
-                        <span>{t("newEvent")}</span>
-                    </Link>
-                </Button>
             </div>
 
             {/* Events Grid / Empty State */}
