@@ -7,6 +7,7 @@ import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { getTranslations, getLocale } from "next-intl/server";
 import { ArrowRight, CalendarRange, Clock, Sparkles } from "lucide-react";
+import Image from "next/image";
 import * as React from "react";
 
 export default async function BookingPage({ params: {
@@ -44,8 +45,14 @@ export default async function BookingPage({ params: {
                     <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary to-indigo-500 opacity-30 blur-md" />
                     <div className="relative size-20 rounded-full overflow-hidden border-2 border-primary/30 bg-secondary/30 flex items-center justify-center">
                         {imageUrl ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={imageUrl} alt={fullName ?? ""} className="size-full object-cover" />
+                            <Image
+                                src={imageUrl}
+                                alt={fullName ?? ""}
+                                fill
+                                className="object-cover"
+                                priority
+                                unoptimized
+                            />
                         ) : (
                             <span className="text-xl font-bold text-primary">{initials}</span>
                         )}
