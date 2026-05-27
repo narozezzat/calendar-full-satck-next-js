@@ -4,8 +4,7 @@ import * as React from "react";
 import { ReactNode } from "react";
 import { Link } from "@/i18n/routing";
 import { LogoIcon } from "@/components/layout/LogoIcon";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { LocaleThemeControls } from "@/components/layout/LocaleThemeControls";
 import { getTranslations } from "next-intl/server";
 
 export default async function PrivateLayout({ children }: { children: ReactNode }): Promise<React.JSX.Element> {
@@ -41,8 +40,7 @@ export default async function PrivateLayout({ children }: { children: ReactNode 
 
                         {/* Actions */}
                         <div className="flex items-center gap-2 sm:gap-3 shrink-0 ms-auto">
-                            <LanguageSwitcher />
-                            <ThemeToggle />
+                            <LocaleThemeControls />
                             <div className="size-8 sm:size-9 rounded-full ring-2 ring-primary/20 hover:ring-primary/40 transition-all overflow-hidden flex items-center justify-center">
                                 <UserButton
                                     appearance={{

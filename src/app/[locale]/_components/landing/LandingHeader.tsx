@@ -4,8 +4,7 @@ import { LogIn } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { LogoIcon } from "@/components/layout/LogoIcon";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { LocaleThemeControls } from "@/components/layout/LocaleThemeControls";
 
 /** Landing page top navigation bar: brand, locale/theme switches, auth CTAs. */
 export async function LandingHeader(): Promise<React.JSX.Element> {
@@ -19,8 +18,7 @@ export async function LandingHeader(): Promise<React.JSX.Element> {
                     <span className="hidden sm:inline truncate">{tc("appName")}</span>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-3">
-                    <LanguageSwitcher />
-                    <ThemeToggle />
+                    <LocaleThemeControls />
                     <SignInButton mode="modal">
                         <Button
                             variant="ghost"
