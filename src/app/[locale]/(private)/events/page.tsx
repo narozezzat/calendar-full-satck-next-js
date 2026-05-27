@@ -3,7 +3,7 @@ import { Link } from "@/i18n/routing";
 import { CalendarPlus, CalendarRange, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { db } from "@/drizzle/db";
-import EventCard from "@/components/cards/EventCard";
+import EventsList from "@/components/EventsList";
 import * as React from "react";
 import { getTranslations } from "next-intl/server";
 
@@ -63,11 +63,7 @@ export default async function EventsPage(): Promise<React.JSX.Element> {
 
             {/* Events Grid / Empty State */}
             {events.length > 0 ? (
-                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {events.map(event => (
-                        <EventCard key={event.id} {...event} />
-                    ))}
-                </div>
+                <EventsList events={events} />
             ) : (
                 <div className="py-12 flex justify-center">
                     <div className="w-full max-w-lg glass-card border-dashed border-2 border-border/60 rounded-2xl p-10 text-center flex flex-col items-center gap-6 relative overflow-hidden">

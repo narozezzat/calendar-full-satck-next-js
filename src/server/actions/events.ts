@@ -4,7 +4,7 @@ import { db } from "@/drizzle/db";
 import { EventTable } from "@/drizzle/schema";
 import { eventFormSchema } from "@/schema/events";
 import { auth } from "@clerk/nextjs/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import "use-server";
 import { z } from "zod";
@@ -68,4 +68,25 @@ export async function deleteEvent(
 
   revalidatePath("/events");
   return { error: false };
+}
+
+export async function deleteManyEvents(
+  ids: string[]
+): Promise<{ error: boolean; deletedCount: number }> {
+  const { userId } = auth();
+
+  if (userId == null || ids.length === 0) {
+    return { error: true, deletedCount: 0 };
+  }
+
+  const { rowCount } = await db
+    .delete(EventTable)
+    .where(and(inArray(EventTable.id, ids), eq(EventTable.clerkUserId, userId)));
+
+  if (rowCount === 0) {
+    return { error: true, deletedCount: 0 };
+  }
+
+  revalidatePath("/events");
+  return { error: false, deletedCount: rowCount ?? 0 };
 }
