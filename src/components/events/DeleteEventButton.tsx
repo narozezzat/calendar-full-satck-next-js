@@ -43,7 +43,7 @@ export function DeleteEventButton({ id, className }: DeleteEventButtonProps) {
             size="icon"
             className={cn(
               "size-9 bg-background/50 border-destructive/30 text-destructive/80 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive shadow-sm transition-all",
-              className
+              className,
             )}
             disabled={isPending}
             aria-label={t("deleteButton")}
@@ -91,7 +91,9 @@ export function DeleteEventButton({ id, className }: DeleteEventButtonProps) {
                 });
               }}
             >
-              {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+              {isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
               {t("deleteConfirm")}
             </AlertDialogAction>
           </AlertDialogFooter>

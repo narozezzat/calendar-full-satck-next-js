@@ -2,5 +2,5 @@ import { PageLoader } from "@/components/shared/PageLoader";
 import * as React from "react";
 
 export default function RootLoading(): React.JSX.Element {
-    return <PageLoader />;
+  return <PageLoader />;
 }

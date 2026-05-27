@@ -53,11 +53,16 @@ export default async function LocaleLayout({
           "h-dvh overflow-hidden bg-background antialiased relative",
           localeFontClass,
           geistSans.variable,
-          cairo.variable
+          cairo.variable,
         )}
       >
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             <ThemedClerkProvider>
               {/* Global decorative background elements */}
               <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">

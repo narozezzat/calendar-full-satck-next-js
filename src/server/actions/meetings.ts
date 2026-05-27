@@ -10,7 +10,7 @@ import { getValidTimesFromSchedule } from "@/lib/getValidTimesFromSchedule";
 import { getLocale } from "next-intl/server";
 
 export async function createMeeting(
-  unsafeData: z.infer<typeof meetingActionSchema>
+  unsafeData: z.infer<typeof meetingActionSchema>,
 ) {
   const { success, data } = meetingActionSchema.safeParse(unsafeData);
 
@@ -21,7 +21,7 @@ export async function createMeeting(
       and(
         eq(isActive, true),
         eq(clerkUserId, data.clerkUserId),
-        eq(id, data.eventId)
+        eq(id, data.eventId),
       ),
   });
 

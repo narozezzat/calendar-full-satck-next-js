@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { Sun, Moon } from "lucide-react"
+import * as React from "react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { Sun, Moon } from "lucide-react";
 
 export function ThemeToggle(): React.JSX.Element {
-  const { setTheme, resolvedTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
+  const { setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
   // Avoid hydration mismatch by rendering a placeholder until mounted
   React.useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return (
-      <Button 
-        variant="ghost" 
-        size="icon" 
+      <Button
+        variant="ghost"
+        size="icon"
         className="size-9 rounded-full border border-border/40 bg-secondary/10"
         aria-label="Toggle theme"
       >
         <div className="size-4.5 rounded-full bg-muted-foreground/20 animate-pulse" />
       </Button>
-    )
+    );
   }
 
-  const isDark = resolvedTheme === "dark"
+  const isDark = resolvedTheme === "dark";
 
   return (
     <Button
@@ -54,6 +54,6 @@ export function ThemeToggle(): React.JSX.Element {
         />
       </div>
     </Button>
-  )
+  );
 }
 export default ThemeToggle;

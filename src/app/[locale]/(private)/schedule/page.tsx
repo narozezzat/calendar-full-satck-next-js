@@ -1,30 +1,30 @@
-import { ScheduleForm } from "@/components/forms/ScheduleForm"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { db } from "@/drizzle/db"
-import { auth } from "@clerk/nextjs/server"
-import { getTranslations } from "next-intl/server"
+import { ScheduleForm } from "@/components/forms/ScheduleForm";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { db } from "@/drizzle/db";
+import { auth } from "@clerk/nextjs/server";
+import { getTranslations } from "next-intl/server";
 
-export const revalidate = 0
+export const revalidate = 0;
 
 export default async function SchedulePage() {
-    const { userId, redirectToSignIn } = auth()
-    if (userId == null) return redirectToSignIn()
+  const { userId, redirectToSignIn } = auth();
+  if (userId == null) return redirectToSignIn();
 
-    const t = await getTranslations("schedule")
+  const t = await getTranslations("schedule");
 
-    const schedule = await db.query.ScheduleTable.findFirst({
-        where: ({ clerkUserId }, { eq }) => eq(clerkUserId, userId),
-        with: { availabilities: true },
-    })
+  const schedule = await db.query.ScheduleTable.findFirst({
+    where: ({ clerkUserId }, { eq }) => eq(clerkUserId, userId),
+    with: { availabilities: true },
+  });
 
-    return (
-        <Card className="max-w-2xl mx-auto glass-card">
-            <CardHeader>
-                <CardTitle>{t("title")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <ScheduleForm schedule={schedule} />
-            </CardContent>
-        </Card>
-    )
+  return (
+    <Card className="max-w-2xl mx-auto glass-card">
+      <CardHeader>
+        <CardTitle>{t("title")}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ScheduleForm schedule={schedule} />
+      </CardContent>
+    </Card>
+  );
 }

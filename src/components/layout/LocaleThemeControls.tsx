@@ -8,10 +8,10 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
  * (positioning, spacing) around it.
  */
 export function LocaleThemeControls(): React.JSX.Element {
-    return (
-        <>
-            <LanguageSwitcher />
-            <ThemeToggle />
-        </>
-    );
+  return (
+    <>
+      <LanguageSwitcher />
+      <ThemeToggle />
+    </>
+  );
 }

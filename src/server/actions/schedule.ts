@@ -10,7 +10,7 @@ import "use-server";
 import { z } from "zod";
 
 export async function saveSchedule(
-  unsafeData: z.infer<typeof scheduleFormSchema>
+  unsafeData: z.infer<typeof scheduleFormSchema>,
 ) {
   const { userId } = auth();
   const { success, data } = scheduleFormSchema.safeParse(unsafeData);
@@ -42,8 +42,8 @@ export async function saveSchedule(
         availabilities.map((availability) => ({
           ...availability,
           scheduleId,
-        }))
-      )
+        })),
+      ),
     );
   }
 

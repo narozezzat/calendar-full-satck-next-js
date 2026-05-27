@@ -7,7 +7,11 @@ import { arSA, enUS } from "@clerk/localizations";
 import { useTheme } from "next-themes";
 import { useLocale } from "next-intl";
 
-export function ThemedClerkProvider({ children }: { children: React.ReactNode }): React.JSX.Element {
+export function ThemedClerkProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.JSX.Element {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
   const locale = useLocale();

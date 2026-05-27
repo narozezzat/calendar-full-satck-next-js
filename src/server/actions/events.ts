@@ -10,7 +10,7 @@ import "use-server";
 import { z } from "zod";
 
 export async function createEvent(
-  unsafeData: z.infer<typeof eventFormSchema>
+  unsafeData: z.infer<typeof eventFormSchema>,
 ): Promise<{ error: boolean }> {
   const { userId } = auth();
   const { success, data } = eventFormSchema.safeParse(unsafeData);
@@ -27,7 +27,7 @@ export async function createEvent(
 
 export async function updateEvent(
   id: string,
-  unsafeData: z.infer<typeof eventFormSchema>
+  unsafeData: z.infer<typeof eventFormSchema>,
 ): Promise<{ error: boolean }> {
   const { userId } = auth();
   const { success, data } = eventFormSchema.safeParse(unsafeData);
@@ -49,9 +49,7 @@ export async function updateEvent(
   return { error: false };
 }
 
-export async function deleteEvent(
-  id: string
-): Promise<{ error: boolean }> {
+export async function deleteEvent(id: string): Promise<{ error: boolean }> {
   const { userId } = auth();
 
   if (userId == null) {
@@ -71,7 +69,7 @@ export async function deleteEvent(
 }
 
 export async function deleteManyEvents(
-  ids: string[]
+  ids: string[],
 ): Promise<{ error: boolean; deletedCount: number }> {
   const { userId } = auth();
 
@@ -81,7 +79,9 @@ export async function deleteManyEvents(
 
   const { rowCount } = await db
     .delete(EventTable)
-    .where(and(inArray(EventTable.id, ids), eq(EventTable.clerkUserId, userId)));
+    .where(
+      and(inArray(EventTable.id, ids), eq(EventTable.clerkUserId, userId)),
+    );
 
   if (rowCount === 0) {
     return { error: true, deletedCount: 0 };
