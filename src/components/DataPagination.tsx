@@ -171,47 +171,56 @@ export function DataPagination({
 
     return (
         <div ref={rootRef} className={cn("relative flex w-full flex-col items-center gap-[0.75rem]", className)}>
-            <Pagination aria-label={t("label")}>
-                <PaginationContent>
-                    <PaginationItem>
-                        {renderTarget(currentPage - 1, {
-                            disabled: isFirst,
-                            ariaLabel: t("previous"),
-                            children: (
-                                <ChevronLeft aria-hidden="true" className="w-[1rem] h-[1rem] rtl:rotate-180" />
-                            ),
-                        })}
-                    </PaginationItem>
+            {/* Inner relative container to align Pagination controls and absolute page count */}
+            <div className="relative flex w-full items-center justify-center">
+                <Pagination aria-label={t("label")}>
+                    <PaginationContent>
+                        <PaginationItem>
+                            {renderTarget(currentPage - 1, {
+                                disabled: isFirst,
+                                ariaLabel: t("previous"),
+                                children: (
+                                    <ChevronLeft aria-hidden="true" className="w-[1rem] h-[1rem] rtl:rotate-180" />
+                                ),
+                            })}
+                        </PaginationItem>
 
-                    {getPageItems(currentPage, totalPages).map((item, index) =>
-                        item === "ellipsis" ? (
-                            <PaginationItem key={`ellipsis-${index}`}>
-                                <PaginationEllipsis />
-                            </PaginationItem>
-                        ) : (
-                            <PaginationItem key={item}>
-                                {renderTarget(item, {
-                                    isActive: item === currentPage,
-                                    ariaLabel: t("goToPage", { page: item }),
-                                    children: item,
-                                })}
-                            </PaginationItem>
-                        )
-                    )}
+                        {getPageItems(currentPage, totalPages).map((item, index) =>
+                            item === "ellipsis" ? (
+                                <PaginationItem key={`ellipsis-${index}`}>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                            ) : (
+                                <PaginationItem key={item}>
+                                    {renderTarget(item, {
+                                        isActive: item === currentPage,
+                                        ariaLabel: t("goToPage", { page: item }),
+                                        children: item,
+                                    })}
+                                </PaginationItem>
+                            )
+                        )}
 
-                    <PaginationItem>
-                        {renderTarget(currentPage + 1, {
-                            disabled: isLast,
-                            ariaLabel: t("next"),
-                            children: (
-                                <ChevronRight aria-hidden="true" className="w-[1rem] h-[1rem] rtl:rotate-180" />
-                            ),
-                        })}
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+                        <PaginationItem>
+                            {renderTarget(currentPage + 1, {
+                                disabled: isLast,
+                                ariaLabel: t("next"),
+                                children: (
+                                    <ChevronRight aria-hidden="true" className="w-[1rem] h-[1rem] rtl:rotate-180" />
+                                ),
+                            })}
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
 
-            <p className="text-[0.625rem] font-bold tracking-wider uppercase text-muted-foreground/60 sm:absolute ltr:sm:right-0 rtl:sm:left-0 sm:top-1/2 sm:-translate-y-1/2">
+                {/* Desktop/iPad-only page info aligned to the right and vertically centered */}
+                <p className="hidden sm:block text-[0.625rem] font-bold tracking-wider uppercase text-muted-foreground/60 absolute ltr:right-0 rtl:left-0 top-1/2 transform -translate-y-1/2">
+                    {t("pageInfo", { current: currentPage, total: totalPages })}
+                </p>
+            </div>
+
+            {/* Mobile-only page info shown below the controls, centered */}
+            <p className="sm:hidden text-[0.625rem] font-bold tracking-wider uppercase text-muted-foreground/60">
                 {t("pageInfo", { current: currentPage, total: totalPages })}
             </p>
         </div>
