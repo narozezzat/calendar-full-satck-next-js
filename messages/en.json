@@ -179,5 +179,12 @@
     "switchLabel": "Switch language",
     "en": "EN",
     "ar": "AR"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "goToPage": "Go to page {page}",
+    "pageInfo": "Page {current} of {total}"
   }
 }

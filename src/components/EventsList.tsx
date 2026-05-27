@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { CheckSquare, Square, Trash2, Loader2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { DataPagination } from "@/components/DataPagination";
 import EventCard from "@/components/cards/EventCard";
 import { deleteManyEvents } from "@/server/actions/events";
 import { EventCardProps } from "@/types/eventTypes";
@@ -23,10 +24,22 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface EventsListProps {
+    /** Events for the current page (already sliced server-side). */
     events: EventCardProps[];
+    /** 1-based active page index. */
+    currentPage: number;
+    /** Total number of pages across all events. */
+    totalPages: number;
+    /** Total number of events across all pages (for the count badge). */
+    totalCount: number;
 }
 
-export default function EventsList({ events }: EventsListProps): React.JSX.Element {
+export default function EventsList({
+    events,
+    currentPage,
+    totalPages,
+    totalCount,
+}: EventsListProps): React.JSX.Element {
     const t = useTranslations("events");
     const tForm = useTranslations("eventForm");
     const router = useRouter();
@@ -98,7 +111,7 @@ export default function EventsList({ events }: EventsListProps): React.JSX.Eleme
                 )}>
                     {selectedCount > 0
                         ? t("selectedCount", { count: selectedCount })
-                        : t("noSelection", { count: events.length })}
+                        : t("noSelection", { count: totalCount })}
                 </span>
             </div>
 
@@ -115,6 +128,13 @@ export default function EventsList({ events }: EventsListProps): React.JSX.Eleme
                 ))}
             </div>
 
+            {/* Pagination (server-driven via the ?page= search param) */}
+            <DataPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                className="pt-4"
+            />
+
             {/* Floating bulk-action bar */}
             <div
                 className={cn(
@@ -124,7 +144,13 @@ export default function EventsList({ events }: EventsListProps): React.JSX.Eleme
                         : "opacity-0 translate-y-6"
                 )}
             >
-                <div className="pointer-events-auto flex items-center gap-3 sm:gap-4 rounded-2xl border border-border/60 bg-background/80 backdrop-blur-xl shadow-2xl shadow-black/10 px-4 py-3 sm:px-5">
+                <div
+                    aria-hidden={selectedCount === 0}
+                    className={cn(
+                        "flex items-center gap-3 sm:gap-4 rounded-2xl border border-border/60 bg-background/80 backdrop-blur-xl shadow-2xl shadow-black/10 px-4 py-3 sm:px-5",
+                        selectedCount > 0 ? "pointer-events-auto" : "pointer-events-none"
+                    )}
+                >
                     <div className="flex items-center gap-2">
                         <span className="flex size-8 items-center justify-center rounded-xl bg-primary/10 text-primary text-sm font-bold">
                             {selectedCount}
