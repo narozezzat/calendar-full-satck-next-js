@@ -1,4 +1,3 @@
-import type { Viewport } from "next";
 import localFont from "next/font/local";
 import { Cairo } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -10,16 +9,6 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import * as React from "react";
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f9f9fb" },
-    { media: "(prefers-color-scheme: dark)", color: "#030712" },
-  ],
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-};
 
 export function generateStaticParams(): Array<{ locale: string }> {
   return routing.locales.map((locale) => ({ locale }));
@@ -58,7 +47,7 @@ export default async function LocaleLayout({
   const localeFontClass = locale === "ar" ? "font-arabic" : "font-sans";
 
   return (
-    <html lang={locale} dir={direction} className="bg-background" suppressHydrationWarning>
+    <html lang={locale} dir={direction} suppressHydrationWarning>
       <body
         className={cn(
           "h-dvh overflow-hidden bg-background antialiased relative",
