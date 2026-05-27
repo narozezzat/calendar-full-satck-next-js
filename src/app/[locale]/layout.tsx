@@ -1,4 +1,5 @@
 import type { Viewport } from "next";
+import { THEME_COLORS } from "@/lib/theme";
 import localFont from "next/font/local";
 import { Cairo } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -13,8 +14,8 @@ import * as React from "react";
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f9f9fb" },
-    { media: "(prefers-color-scheme: dark)", color: "#030712" },
+    { media: "(prefers-color-scheme: light)", color: THEME_COLORS.light },
+    { media: "(prefers-color-scheme: dark)", color: THEME_COLORS.dark },
   ],
   width: "device-width",
   initialScale: 1,
