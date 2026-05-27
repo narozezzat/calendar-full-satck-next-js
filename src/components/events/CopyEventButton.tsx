@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { Button, ButtonProps } from "./ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { CheckCheck, Copy, CopyX } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";

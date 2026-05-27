@@ -3,9 +3,9 @@ import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { LogIn } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
-import { LogoIcon } from "@/components/LogoIcon";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { LogoIcon } from "@/components/layout/LogoIcon";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 /** Landing page top navigation bar: brand, locale/theme switches, auth CTAs. */
 export async function LandingHeader(): Promise<React.JSX.Element> {

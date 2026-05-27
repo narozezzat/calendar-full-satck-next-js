@@ -2,7 +2,7 @@ import * as React from "react";
 import { Edit, ExternalLink, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { CopyEventButton } from "@/components/CopyEventButton";
+import { CopyEventButton } from "@/components/events/CopyEventButton";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 

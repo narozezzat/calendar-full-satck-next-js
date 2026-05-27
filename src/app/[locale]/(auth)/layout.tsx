@@ -4,8 +4,8 @@ import * as React from "react";
 import { ReactNode } from "react";
 import { CalendarRange, Sparkles, CheckCircle2, ShieldCheck, Zap } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { getTranslations, getLocale } from "next-intl/server";
 
 export default async function AuthLayout({ children }: { children: ReactNode }): Promise<React.JSX.Element> {

@@ -4,9 +4,9 @@ import { and, eq, ilike, or, type SQL } from "drizzle-orm";
 import { db } from "@/drizzle/db";
 import { EventTable } from "@/drizzle/schema";
 import EventsList from "@/components/EventsList";
-import EventsSearch from "@/components/EventsSearch";
-import PageHeader from "@/components/PageHeader";
-import EmptyState from "@/components/EmptyState";
+import EventsSearch from "@/components/events/EventsSearch";
+import PageHeader from "@/components/shared/PageHeader";
+import EmptyState from "@/components/shared/EmptyState";
 import * as React from "react";
 import { getTranslations } from "next-intl/server";
 

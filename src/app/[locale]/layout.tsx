@@ -1,8 +1,8 @@
 import localFont from "next/font/local";
 import { Cairo } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { ThemedClerkProvider } from "@/components/themed-clerk-provider";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemedClerkProvider } from "@/components/theme/themed-clerk-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";

@@ -1,6 +1,6 @@
 "use client";
 
-import { PageLoader } from "@/components/PageLoader";
+import { PageLoader } from "@/components/shared/PageLoader";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 

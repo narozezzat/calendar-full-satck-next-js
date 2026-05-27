@@ -16,7 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { SuccessDialog } from "@/components/SuccessDialog";
+import { SuccessDialog } from "@/components/shared/SuccessDialog";
 import { cn } from "@/lib/utils";
 import { useRouter } from "@/i18n/routing";
 

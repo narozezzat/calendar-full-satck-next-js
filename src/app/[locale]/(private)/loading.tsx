@@ -1,4 +1,4 @@
-import { PageLoader } from "@/components/PageLoader";
+import { PageLoader } from "@/components/shared/PageLoader";
 import * as React from "react";
 
 export default function PrivateLoading(): React.JSX.Element {

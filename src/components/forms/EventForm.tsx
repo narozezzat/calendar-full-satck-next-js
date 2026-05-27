@@ -16,7 +16,7 @@ import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { SuccessDialog } from "@/components/SuccessDialog";
+import { SuccessDialog } from "@/components/shared/SuccessDialog";
 import { DeleteConfirmDialog } from "@/components/shared/DeleteConfirmDialog";
 import { FormRootError } from "./fields/FormRootError";
 

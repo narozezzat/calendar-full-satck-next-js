@@ -1,11 +1,11 @@
-import { NavLink } from "@/components/NavLink";
+import { NavLink } from "@/components/layout/NavLink";
 import { UserButton } from "@clerk/nextjs";
 import * as React from "react";
 import { ReactNode } from "react";
 import { Link } from "@/i18n/routing";
-import { LogoIcon } from "@/components/LogoIcon";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { LogoIcon } from "@/components/layout/LogoIcon";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { getTranslations } from "next-intl/server";
 
 export default async function PrivateLayout({ children }: { children: ReactNode }): Promise<React.JSX.Element> {
