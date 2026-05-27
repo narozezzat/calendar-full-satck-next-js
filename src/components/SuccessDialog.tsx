@@ -54,7 +54,7 @@ export function SuccessDialog({
             <AlertDialogTitle className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
               {title}
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-[15px] text-muted-foreground leading-relaxed">
+            <AlertDialogDescription className="text-[0.9375rem] text-muted-foreground leading-relaxed">
               {description}
             </AlertDialogDescription>
           </div>

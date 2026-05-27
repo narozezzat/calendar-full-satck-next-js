@@ -211,7 +211,7 @@ export function DataPagination({
                 </PaginationContent>
             </Pagination>
 
-            <p className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground/60 sm:absolute ltr:sm:right-0 rtl:sm:left-0 sm:top-1/2 sm:-translate-y-1/2">
+            <p className="text-[0.625rem] font-bold tracking-wider uppercase text-muted-foreground/60 sm:absolute ltr:sm:right-0 rtl:sm:left-0 sm:top-1/2 sm:-translate-y-1/2">
                 {t("pageInfo", { current: currentPage, total: totalPages })}
             </p>
         </div>

@@ -60,7 +60,7 @@ export default function EventCard({
                             aria-label={t("select")}
                             onClick={() => onToggleSelect?.(id)}
                             className={cn(
-                                "flex size-5 items-center justify-center rounded-full border-[1.5px] cursor-pointer",
+                                "flex size-5 items-center justify-center rounded-full border-[0.09375rem] cursor-pointer",
                                 "transition-all duration-200 active:scale-90",
                                 selected
                                     ? "border-primary bg-primary text-white shadow-sm shadow-primary/30"
@@ -84,7 +84,7 @@ export default function EventCard({
                     <div className="flex items-center gap-2 z-10">
                         {/* Duration Badge */}
                         <div className={cn(
-                            "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold border transition-all duration-200",
+                            "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[0.6875rem] font-semibold border transition-all duration-200",
                             isActive
                                 ? "text-primary bg-primary/10 border-primary/20 dark:bg-primary/20 dark:border-primary/30 hover:bg-primary/15"
                                 : "text-muted-foreground/80 bg-muted border-border/30"
@@ -96,7 +96,7 @@ export default function EventCard({
                         {/* Status Badge */}
                         <div>
                             {isActive ? (
-                                <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[0.6875rem] font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                                     <span className="relative flex h-1.5 w-1.5">
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
@@ -104,7 +104,7 @@ export default function EventCard({
                                     <span>{t("active")}</span>
                                 </span>
                             ) : (
-                                <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold bg-muted-foreground/10 text-muted-foreground/50 border border-border/40">
+                                <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[0.6875rem] font-semibold bg-muted-foreground/10 text-muted-foreground/50 border border-border/40">
                                     <EyeOff aria-hidden="true" className="size-3" />
                                     <span>{t("inactive")}</span>
                                 </span>
@@ -126,7 +126,7 @@ export default function EventCard({
                 </div>
 
                 {/* Description */}
-                <div className="mt-3 w-full min-h-[40px] flex-1">
+                <div className="mt-3 w-full min-h-[2.5rem] flex-1">
                     {description != null ? (
                         <p className="text-sm text-muted-foreground/75 leading-relaxed line-clamp-2 break-words">
                             {description}

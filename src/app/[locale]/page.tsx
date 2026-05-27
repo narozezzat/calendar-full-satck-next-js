@@ -84,7 +84,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
                   {t("heroTitle2")}
                 </span>
               </h1>
-              <p className="text-muted-foreground text-lg sm:text-xl max-w-[560px] leading-relaxed">
+              <p className="text-muted-foreground text-lg sm:text-xl max-w-[35rem] leading-relaxed">
                 {t("heroDescription")}
               </p>
 
@@ -121,7 +121,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
             {/* Right Visual Sandbox Mockup */}
             <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end">
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-indigo-500 opacity-20 blur-xl animate-pulse" />
-              <Card className="w-full max-w-[400px] glass-card border-border/40 relative overflow-hidden animate-float">
+              <Card className="w-full max-w-[25rem] glass-card border-border/40 relative overflow-hidden animate-float">
                 {/* Decorative gradient blur */}
                 <div className="absolute top-0 end-0 w-24 h-24 bg-primary/20 blur-2xl rounded-full" />
 

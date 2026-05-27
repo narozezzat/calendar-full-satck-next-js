@@ -53,7 +53,7 @@ export default async function BookingPage({ params: {
                 </div>
 
                 <div className="space-y-2">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-primary/10 border border-primary/20 text-primary">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[0.6875rem] font-semibold bg-primary/10 border border-primary/20 text-primary">
                         <Sparkles aria-hidden="true" className="size-3" />
                         <span>{tc("bookAnEvent")}</span>
                     </div>

@@ -110,7 +110,7 @@ export function ScheduleForm({
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
-                                <SelectContent className="max-h-[300px] glass-card">
+                                <SelectContent className="max-h-[18.75rem] glass-card">
                                     {Intl.supportedValuesOf("timeZone").map(timezone => (
                                         <SelectItem key={timezone} value={timezone} className="text-sm">
                                             {timezone}
@@ -159,7 +159,7 @@ export function ScheduleForm({
                                     <div className="flex-1 flex flex-col gap-2.5">
                                         {daySlots.length === 0 ? (
                                             <div className="flex items-center pt-1">
-                                                <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground bg-secondary/80 px-2.5 py-1 rounded border border-border/50 select-none">
+                                                <span className="text-[0.625rem] uppercase font-bold tracking-wider text-muted-foreground bg-secondary/80 px-2.5 py-1 rounded border border-border/50 select-none">
                                                     {tCommon("unavailable")}
                                                 </span>
                                             </div>

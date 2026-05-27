@@ -112,7 +112,7 @@ export function MeetingForm({
                                         <SelectValue />
                                     </SelectTrigger>
                                 </FormControl>
-                                <SelectContent className="max-h-[250px] glass-card">
+                                <SelectContent className="max-h-[15.625rem] glass-card">
                                     {Intl.supportedValuesOf("timeZone").map(tz => (
                                         <SelectItem key={tz} value={tz} className="text-sm">
                                             {tz}
@@ -191,7 +191,7 @@ export function MeetingForm({
                                     <Clock aria-hidden="true" className="size-4 text-muted-foreground" />
                                     <span>{t("timeLabel")}</span>
                                 </FormLabel>
-                                <div className="min-h-[100px] flex-1">
+                                <div className="min-h-[6.25rem] flex-1">
                                     {date == null ? (
                                         <div className="flex flex-col items-center justify-center h-full border border-dashed border-border rounded-xl p-4 text-center bg-secondary/10">
                                             <CalendarIcon aria-hidden="true" className="size-5 text-muted-foreground/60 mb-1.5" />
@@ -202,7 +202,7 @@ export function MeetingForm({
                                             <span className="text-xs text-muted-foreground font-semibold">{t("noSlots")}</span>
                                         </div>
                                     ) : (
-                                        <div className="grid grid-cols-2 gap-2 max-h-[175px] overflow-y-auto pe-1">
+                                        <div className="grid grid-cols-2 gap-2 max-h-[10.9375rem] overflow-y-auto pe-1">
                                             {availableSlotsForDay.map(time => {
                                                 const isSelected = field.value?.toISOString() === time.toISOString();
                                                 return (
