@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { CopyEventButton } from "@/components/CopyEventButton";
-import { DeleteEventButton } from "@/components/DeleteEventButton";
 import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/routing";
 import { formatEventDescription } from "@/lib/formatters";
 import { EventCardProps } from "@/types/eventTypes";
-import { Clock, EyeOff, Edit, ExternalLink, Check } from "lucide-react";
+import { Clock, EyeOff, Edit, ExternalLink, Check, Trash2 } from "lucide-react";
 import * as React from "react";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -14,6 +13,7 @@ interface EventCardSelectionProps extends EventCardProps {
     selectable?: boolean;
     selected?: boolean;
     onToggleSelect?: (id: string) => void;
+    onDeleteClick?: (id: string, name: string) => void;
 }
 
 export default function EventCard({
@@ -26,6 +26,7 @@ export default function EventCard({
     selectable = false,
     selected = false,
     onToggleSelect,
+    onDeleteClick,
 }: EventCardSelectionProps): React.JSX.Element {
     const t = useTranslations("common");
     const locale = useLocale();
@@ -33,18 +34,19 @@ export default function EventCard({
     return (
         <div
             className={cn(
-                "group relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 shadow-sm",
-                "bg-card/95 dark:bg-card/50 backdrop-blur-xl border border-border/60",
+                "group relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300",
+                "border border-border/50 dark:border-border/40",
+                "bg-card/95 dark:bg-gradient-to-b dark:from-[#111625]/90 dark:to-[#0B0F19]/95 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.25)]",
                 isActive
-                    ? "hover-card-glow hover:border-primary/40"
-                    : "hover:-translate-y-0.5 hover:border-border/80",
-                selected && "ring-2 ring-primary border-primary/30 shadow-lg shadow-primary/10 bg-primary/[0.01] dark:bg-primary/[0.02]"
+                    ? "hover:border-primary/50 dark:hover:border-primary/40 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(139,92,246,0.12)] dark:hover:shadow-[0_12px_35px_rgba(139,92,246,0.18)]"
+                    : "hover:-translate-y-0.5 hover:border-border",
+                selected && "ring-2 ring-primary border-primary/40 shadow-lg shadow-primary/10 bg-primary/[0.02] dark:bg-primary/[0.03]"
             )}
         >
             {/* ─── BODY ─── */}
             <div className={cn(
                 "flex flex-col items-start text-start px-6 pt-6 pb-5 flex-1 relative w-full",
-                !isActive && "opacity-60"
+                !isActive && "opacity-75"
             )}>
 
                 {/* Top Header Bar */}
@@ -61,7 +63,7 @@ export default function EventCard({
                                 "flex size-5 items-center justify-center rounded-full border-[1.5px] cursor-pointer",
                                 "transition-all duration-200 active:scale-90",
                                 selected
-                                    ? "border-primary bg-primary text-white shadow-sm shadow-primary/20"
+                                    ? "border-primary bg-primary text-white shadow-sm shadow-primary/30"
                                     : "border-border/80 bg-card hover:border-primary/50"
                             )}
                         >
@@ -75,53 +77,62 @@ export default function EventCard({
                             />
                         </button>
                     ) : (
-                        <div />
+                        <div className="size-5" />
                     )}
 
-                    {/* Status Badge */}
-                    <div className="z-10">
-                        {isActive ? (
-                            <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                <span className="relative flex h-1.5 w-1.5">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                    {/* Status & Duration Badges */}
+                    <div className="flex items-center gap-2 z-10">
+                        {/* Duration Badge */}
+                        <div className={cn(
+                            "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold border transition-all duration-200",
+                            isActive
+                                ? "text-primary bg-primary/10 border-primary/20 dark:bg-primary/20 dark:border-primary/30 hover:bg-primary/15"
+                                : "text-muted-foreground/80 bg-muted border-border/30"
+                        )}>
+                            <Clock aria-hidden="true" className="size-3" />
+                            <span>{formatEventDescription(durationInMinutes, locale)}</span>
+                        </div>
+
+                        {/* Status Badge */}
+                        <div>
+                            {isActive ? (
+                                <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                    <span className="relative flex h-1.5 w-1.5">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                                    </span>
+                                    <span>{t("active")}</span>
                                 </span>
-                                <span>{t("active")}</span>
-                            </span>
-                        ) : (
-                            <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold bg-muted-foreground/10 text-muted-foreground/50 border border-border/40">
-                                <EyeOff aria-hidden="true" className="size-3" />
-                                <span>{t("inactive")}</span>
-                            </span>
-                        )}
+                            ) : (
+                                <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold bg-muted-foreground/10 text-muted-foreground/50 border border-border/40">
+                                    <EyeOff aria-hidden="true" className="size-3" />
+                                    <span>{t("inactive")}</span>
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                {/* Name & Duration Row */}
-                <div className="flex items-start justify-between gap-4 w-full">
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground tracking-tight line-clamp-2 flex-1 group-hover:text-primary transition-colors duration-200">
+                {/* Name Row */}
+                <div className="w-full mt-1.5">
+                    <h3 className={cn(
+                        "text-lg sm:text-xl font-bold tracking-tight line-clamp-2 transition-colors duration-200",
+                        isActive
+                            ? "text-foreground group-hover:text-primary"
+                            : "text-muted-foreground"
+                    )}>
                         {name}
                     </h3>
-                    <div className={cn(
-                        "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 shrink-0",
-                        "text-xs font-semibold",
-                        isActive
-                            ? "text-primary bg-primary/10 border border-primary/20"
-                            : "text-muted-foreground bg-muted border border-border/30"
-                    )}>
-                        <Clock aria-hidden="true" className="size-3.5" />
-                        <span>{formatEventDescription(durationInMinutes, locale)}</span>
-                    </div>
                 </div>
 
                 {/* Description */}
-                <div className="mt-3.5 w-full min-h-[40px]">
+                <div className="mt-3 w-full min-h-[40px] flex-1">
                     {description != null ? (
                         <p className="text-sm text-muted-foreground/75 leading-relaxed line-clamp-2 break-words">
                             {description}
                         </p>
                     ) : (
-                        <p className="text-xs text-muted-foreground/45 italic leading-relaxed">
+                        <p className="text-xs text-muted-foreground/40 italic leading-relaxed">
                             {locale === "ar" ? "لا يوجد وصف لهذه الفعالية" : "No description provided"}
                         </p>
                     )}
@@ -130,22 +141,22 @@ export default function EventCard({
 
             {/* ─── ACTIONS ─── */}
             <div className={cn(
-                "px-6 py-4 border-t border-border/10 bg-muted/15 dark:bg-muted/5 flex items-center gap-1.5 mt-auto w-full",
-                !isActive && "opacity-65"
+                "px-6 py-4 border-t border-border/40 dark:border-border/30 bg-slate-50/70 dark:bg-slate-950/40 backdrop-blur-md flex items-center gap-2 mt-auto w-full",
+                !isActive && "opacity-75"
             )}>
                 {/* Edit — primary action */}
                 <Button
                     size="sm"
                     asChild
                     className={cn(
-                        "h-8 px-3.5 text-xs font-medium rounded-lg",
-                        "bg-primary hover:bg-primary/90 text-primary-foreground",
-                        "shadow-sm transition-all duration-200"
+                        "h-9 px-4 text-xs font-semibold rounded-xl relative overflow-hidden",
+                        "bg-gradient-to-r from-primary to-indigo-600 hover:from-primary/95 hover:to-indigo-500 text-primary-foreground",
+                        "shadow-md shadow-primary/10 transition-all duration-200 hover:-translate-y-0.5 active:scale-95 border border-primary/15 group/btn"
                     )}
                 >
                     <Link href={`/events/${id}/edit`} className="flex items-center gap-1.5">
-                        <Edit aria-hidden="true" className="size-3" />
-                        {t("edit")}
+                        <Edit aria-hidden="true" className="size-3.5 transition-transform group-hover/btn:rotate-12" />
+                        <span>{t("edit")}</span>
                     </Link>
                 </Button>
 
@@ -154,9 +165,9 @@ export default function EventCard({
                     <>
                         <Button
                             asChild
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
-                            className="h-8 px-2.5 text-xs text-muted-foreground hover:text-foreground rounded-lg"
+                            className="h-9 px-3.5 text-xs text-foreground/90 bg-card dark:bg-card/25 border border-border/50 dark:border-border/60 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900/60 hover:text-foreground hover:border-border transition-all duration-150 shadow-[0_1px_2px_rgba(0,0,0,0.03)] dark:shadow-none"
                         >
                             <Link
                                 href={`/book/${clerkUserId}/${id}`}
@@ -164,27 +175,32 @@ export default function EventCard({
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-1.5"
                             >
-                                <ExternalLink aria-hidden="true" className="size-3" />
+                                <ExternalLink aria-hidden="true" className="size-3.5" />
                                 <span>{t("preview")}</span>
                             </Link>
                         </Button>
 
                         <CopyEventButton
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
                             eventId={id}
                             clerkUserId={clerkUserId}
-                            className="h-8 px-2.5 text-xs text-muted-foreground hover:text-foreground rounded-lg"
+                            className="h-9 w-9 lg:w-auto px-0 lg:px-3.5 text-xs text-foreground/90 bg-card dark:bg-card/25 border border-border/50 dark:border-border/60 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900/60 hover:text-foreground hover:border-border transition-all duration-150 flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.03)] dark:shadow-none"
                         />
                     </>
                 ) : null}
 
                 <div className="flex-1" />
 
-                <DeleteEventButton
-                    id={id}
-                    className="size-7 rounded-lg border-none bg-transparent text-muted-foreground/30 hover:text-destructive hover:bg-destructive/10 shadow-none"
-                />
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => onDeleteClick?.(id, name)}
+                    className="size-9 rounded-xl border border-destructive/25 bg-destructive/5 text-destructive hover:bg-destructive hover:text-destructive-foreground hover:border-destructive transition-all duration-150 flex items-center justify-center"
+                    aria-label={t("delete")}
+                >
+                    <Trash2 className="size-4" />
+                </Button>
             </div>
         </div>
     );

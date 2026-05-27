@@ -27,6 +27,7 @@ import {
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { SuccessDialog } from "@/components/SuccessDialog";
 
 export function EventForm({ event }: {
     event?: {
@@ -40,6 +41,9 @@ export function EventForm({ event }: {
     const t = useTranslations("eventForm")
     const router = useRouter()
     const [isDeletingPending, startDeleteTransition] = useTransition()
+    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false)
+    const [showSuccessDialog, setShowSuccessDialog] = React.useState(false)
+    const [shouldOpenSuccess, setShouldOpenSuccess] = React.useState(false)
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
         defaultValues: event
@@ -68,7 +72,8 @@ export function EventForm({ event }: {
     }
 
     return (
-        <Form {...form}>
+        <>
+            <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6"
@@ -171,7 +176,7 @@ export function EventForm({ event }: {
                 <div className="flex items-center justify-between pt-4 border-t border-border/40 gap-3">
                     <div>
                         {event ? (
-                            <AlertDialog>
+                            <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
                                 <AlertDialogTrigger asChild>
                                     <Button 
                                         variant="destructiveGhost" 
@@ -183,7 +188,16 @@ export function EventForm({ event }: {
                                         {t("deleteButton")}
                                     </Button>
                                 </AlertDialogTrigger>
-                                <AlertDialogContent className="glass-card max-w-sm rounded-2xl border-border">
+                                <AlertDialogContent 
+                                    className="glass-card max-w-sm rounded-2xl border-border"
+                                    onCloseAutoFocus={(e) => {
+                                        if (shouldOpenSuccess) {
+                                            e.preventDefault();
+                                            setShouldOpenSuccess(false);
+                                            setShowSuccessDialog(true);
+                                        }
+                                    }}
+                                >
                                     <AlertDialogHeader>
                                         <AlertDialogTitle className="font-bold text-lg">{t("deleteTitle")}</AlertDialogTitle>
                                         <AlertDialogDescription className="text-sm text-muted-foreground">
@@ -197,7 +211,8 @@ export function EventForm({ event }: {
                                         <AlertDialogAction
                                             disabled={isDeletingPending || form.formState.isSubmitting}
                                             variant="destructive"
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                                e.preventDefault();
                                                 startDeleteTransition(async () => {
                                                     const data = await deleteEvent(event.id)
 
@@ -207,8 +222,8 @@ export function EventForm({ event }: {
                                                             message: t("errorDelete"),
                                                         })
                                                     } else {
-                                                        toast.success(t("deleteSuccessMessage"))
-                                                        router.push("/events")
+                                                        setShouldOpenSuccess(true);
+                                                        setShowDeleteDialog(false);
                                                     }
                                                 })
                                             }}
@@ -237,5 +252,13 @@ export function EventForm({ event }: {
                 </div>
             </form>
         </Form>
+        <SuccessDialog
+            open={showSuccessDialog}
+            onOpenChange={setShowSuccessDialog}
+            title={t("deleteSuccessTitle")}
+            description={t("deleteSuccessMessage")}
+            onContinue={() => router.push("/events")}
+        />
+        </>
     )
 }

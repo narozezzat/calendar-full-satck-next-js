@@ -34,8 +34,8 @@ export function CopyEventButton({ eventId, clerkUserId, ...buttonProps }: Omit<B
                     })
             }}
         >
-            <CopyIcon aria-hidden="true" className="size-4 sm:me-2" />
-            <span className="hidden sm:inline">{label}</span>
+            <CopyIcon aria-hidden="true" className="size-3.5 lg:me-1.5 shrink-0" />
+            <span className="hidden lg:inline">{label}</span>
         </Button>
     )
 }

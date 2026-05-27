@@ -8,10 +8,11 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { DataPagination } from "@/components/DataPagination";
 import EventCard from "@/components/cards/EventCard";
-import { deleteManyEvents } from "@/server/actions/events";
+import { deleteEvent, deleteManyEvents } from "@/server/actions/events";
 import { EventCardProps } from "@/types/eventTypes";
 import { cn } from "@/lib/utils";
 import { useRouter } from "@/i18n/routing";
+import { SuccessDialog } from "@/components/SuccessDialog";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -32,6 +33,8 @@ interface EventsListProps {
     totalPages: number;
     /** Total number of events across all pages (for the count badge). */
     totalCount: number;
+    /** Optional search component to unify into the control toolbar. */
+    searchComponent?: React.ReactNode;
 }
 
 export default function EventsList({
@@ -39,6 +42,7 @@ export default function EventsList({
     currentPage,
     totalPages,
     totalCount,
+    searchComponent,
 }: EventsListProps): React.JSX.Element {
     const t = useTranslations("events");
     const tForm = useTranslations("eventForm");
@@ -47,6 +51,12 @@ export default function EventsList({
     const [selected, setSelected] = useState<Set<string>>(new Set());
     const [showConfirm, setShowConfirm] = useState(false);
     const [isPending, startTransition] = useTransition();
+    const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+    const [shouldOpenSuccess, setShouldOpenSuccess] = useState(false);
+    const [lastDeletedCount, setLastDeletedCount] = useState(0);
+    const [eventToDelete, setEventToDelete] = useState<{ id: string; name: string } | null>(null);
+    const [isSinglePending, startSingleTransition] = useTransition();
+    const [successType, setSuccessType] = useState<"single" | "bulk">("single");
 
     const selectedCount = selected.size;
     const allSelected = selectedCount > 0 && selectedCount === events.length;
@@ -74,45 +84,71 @@ export default function EventsList({
     const handleDeleteSelected = (): void => {
         startTransition(async () => {
             const ids = Array.from(selected);
+            setLastDeletedCount(ids.length);
             const res = await deleteManyEvents(ids);
             if (res.error) {
                 toast.error(tForm("errorDelete"));
                 return;
             }
-            toast.success(t("bulkDeleteSuccess", { count: res.deletedCount }));
             clearSelection();
+            setSuccessType("bulk");
+            setShouldOpenSuccess(true);
             setShowConfirm(false);
-            router.refresh();
+        });
+    };
+
+    const handleSingleDelete = (): void => {
+        if (!eventToDelete) return;
+        startSingleTransition(async () => {
+            const res = await deleteEvent(eventToDelete.id);
+            if (res.error) {
+                toast.error(tForm("errorDelete"));
+                return;
+            }
+            setSuccessType("single");
+            setShouldOpenSuccess(true);
+            setEventToDelete(null);
         });
     };
 
     return (
         <>
-            {/* Selection toolbar */}
-            <div className="flex items-center justify-between gap-3 -mt-2">
-                <button
-                    type="button"
-                    onClick={toggleSelectAll}
-                    className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group"
-                >
-                    {allSelected ? (
-                        <CheckSquare aria-hidden="true" className="size-4 text-primary" />
-                    ) : (
-                        <Square aria-hidden="true" className="size-4 group-hover:text-primary transition-colors" />
-                    )}
-                    {allSelected ? t("deselectAll") : t("selectAll")}
-                </button>
+            {/* Unified Search & Selection Toolbar */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-card/30 dark:bg-slate-900/20 border border-border/40 backdrop-blur-md shadow-sm">
+                {searchComponent ? (
+                    <div className="w-full md:max-w-md">
+                        {searchComponent}
+                    </div>
+                ) : null}
 
-                <span className={cn(
-                    "text-xs font-semibold rounded-full px-3 py-1 transition-all duration-300",
-                    selectedCount > 0
-                        ? "text-primary bg-primary/10 border border-primary/20 shadow-sm shadow-primary/10"
-                        : "text-muted-foreground bg-secondary/60 border border-border/40"
+                <div className={cn(
+                    "flex items-center justify-between gap-6 w-full",
+                    searchComponent ? "md:w-auto md:justify-end" : "justify-between"
                 )}>
-                    {selectedCount > 0
-                        ? t("selectedCount", { count: selectedCount })
-                        : t("noSelection", { count: totalCount })}
-                </span>
+                    <button
+                        type="button"
+                        onClick={toggleSelectAll}
+                        className="flex items-center gap-2.5 text-sm font-semibold text-muted-foreground hover:text-foreground active:scale-95 transition-all group cursor-pointer"
+                    >
+                        {allSelected ? (
+                            <CheckSquare aria-hidden="true" className="size-4 text-primary" />
+                        ) : (
+                            <Square aria-hidden="true" className="size-4 group-hover:text-primary transition-colors" />
+                        )}
+                        <span>{allSelected ? t("deselectAll") : t("selectAll")}</span>
+                    </button>
+
+                    <span className={cn(
+                        "text-xs font-bold rounded-full px-3 py-1.5 transition-all duration-300 shadow-inner",
+                        selectedCount > 0
+                            ? "text-primary bg-primary/10 border border-primary/25 shadow-sm shadow-primary/5"
+                            : "text-muted-foreground/80 bg-secondary/50 border border-border/40"
+                    )}>
+                        {selectedCount > 0
+                            ? t("selectedCount", { count: selectedCount })
+                            : t("noSelection", { count: totalCount })}
+                    </span>
+                </div>
             </div>
 
             {/* Events Grid */}
@@ -124,6 +160,7 @@ export default function EventsList({
                         selectable
                         selected={selected.has(event.id)}
                         onToggleSelect={toggleSelect}
+                        onDeleteClick={(id, name) => setEventToDelete({ id, name })}
                     />
                 ))}
             </div>
@@ -156,7 +193,7 @@ export default function EventsList({
                             {selectedCount}
                         </span>
                         <span className="hidden sm:inline text-sm font-medium text-foreground">
-                            {t("selectedCount", { count: selectedCount })}
+                            {t("selected")}
                         </span>
                     </div>
 
@@ -185,7 +222,16 @@ export default function EventsList({
 
             {/* Confirmation dialog */}
             <AlertDialog open={showConfirm} onOpenChange={setShowConfirm}>
-                <AlertDialogContent className="glass-card border-border/60">
+                <AlertDialogContent 
+                    className="glass-card border-border/60"
+                    onCloseAutoFocus={(e) => {
+                        if (shouldOpenSuccess) {
+                            e.preventDefault();
+                            setShouldOpenSuccess(false);
+                            setShowSuccessDialog(true);
+                        }
+                    }}
+                >
                     <AlertDialogHeader>
                         <AlertDialogTitle className="text-destructive flex items-center gap-2">
                             <Trash2 className="size-5" />
@@ -216,6 +262,61 @@ export default function EventsList({
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+
+            {/* Single delete confirmation dialog */}
+            <AlertDialog open={eventToDelete !== null} onOpenChange={(open) => !open && setEventToDelete(null)}>
+                <AlertDialogContent 
+                    className="glass-card border-border/60"
+                    onCloseAutoFocus={(e) => {
+                        if (shouldOpenSuccess) {
+                            e.preventDefault();
+                            setShouldOpenSuccess(false);
+                            setShowSuccessDialog(true);
+                        }
+                    }}
+                >
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-destructive flex items-center gap-2">
+                            <Trash2 className="size-5" />
+                            {tForm("deleteTitle")}
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                            {tForm("deleteDescription")}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="mt-4">
+                        <AlertDialogCancel
+                            disabled={isSinglePending}
+                            className="border-border/50 hover:bg-secondary/50"
+                        >
+                            {tForm("cancelButton")}
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                            disabled={isSinglePending}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md shadow-destructive/20"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleSingleDelete();
+                            }}
+                        >
+                            {isSinglePending ? <Loader2 className="me-2 h-4 w-4 animate-spin" /> : null}
+                            {tForm("deleteConfirm")}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+
+            <SuccessDialog
+                open={showSuccessDialog}
+                onOpenChange={setShowSuccessDialog}
+                title={successType === "single" ? tForm("deleteSuccessTitle") : t("bulkDeleteSuccessTitle")}
+                description={
+                    successType === "single"
+                        ? tForm("deleteSuccessMessage")
+                        : t("bulkDeleteSuccessMessage", { count: lastDeletedCount })
+                }
+                onContinue={() => router.refresh()}
+            />
         </>
     );
 }

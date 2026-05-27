@@ -11,6 +11,7 @@
     "delete": "حذف",
     "edit": "تعديل",
     "preview": "معاينة",
+    "copy": "نسخ",
     "copyLink": "نسخ الرابط",
     "copied": "تم النسخ",
     "copyError": "خطأ",
@@ -82,12 +83,25 @@
     "selectAll": "تحديد الكل",
     "deselectAll": "إلغاء تحديد الكل",
     "selectedCount": "{count, plural, zero {تم تحديد #} one {تم تحديد #} two {تم تحديد #} few {تم تحديد #} many {تم تحديد #} other {تم تحديد #}}",
+    "selected": "محدد",
     "noSelection": "{count, plural, zero {# فعالية} one {فعالية واحدة} two {فعاليتان} few {# فعاليات} many {# فعالية} other {# فعالية}}",
     "clearSelection": "مسح",
+    "search": {
+      "label": "البحث في الفعاليات",
+      "placeholder": "ابحث في الفعاليات بالاسم أو الوصف…",
+      "clear": "مسح البحث",
+      "noResults": {
+        "title": "لا توجد فعاليات مطابقة",
+        "description": "لم يطابق أي شيء «{query}». جرّب كلمة مختلفة أو امسح البحث.",
+        "cta": "مسح البحث"
+      }
+    },
     "deleteSelected": "حذف المحدد",
     "bulkDeleteTitle": "حذف الفعاليات المحددة؟",
     "bulkDeleteDescription": "سيؤدي هذا إلى حذف {count, plural, zero {# فعالية} one {فعالية واحدة} two {فعاليتين} few {# فعاليات} many {# فعالية} other {# فعالية}} بشكل نهائي. لا يمكن التراجع عن هذا الإجراء، ولن يتمكن الضيوف من حجز مواعيد لها.",
     "bulkDeleteSuccess": "تم حذف {count, plural, zero {# فعالية} one {فعالية واحدة} two {فعاليتين} few {# فعاليات} many {# فعالية} other {# فعالية}} بنجاح.",
+    "bulkDeleteSuccessTitle": "تم حذف الفعاليات",
+    "bulkDeleteSuccessMessage": "تم حذف {count, plural, zero {# فعالية} one {فعالية واحدة} two {فعاليتين} few {# فعاليات} many {# فعالية} other {# فعالية}} بنجاح من جدولك.",
     "empty": {
       "title": "لم يتم إنشاء أي فعاليات بعد",
       "description": "ابدأ بإنشاء أول قالب فعالية. بمجرد تفعيله، سيتمكن العملاء من حجز المواعيد مباشرة.",
