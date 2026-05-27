@@ -6,7 +6,6 @@
   :root {
     --background: 240 20% 98%;
     --theme-color: #f9f9fb;
-    color-scheme: light;
     --foreground: 240 10% 4%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 4%;
@@ -39,7 +38,6 @@
     /* Sleek space navy/obsidian theme */
     --background: 224 71% 4%;
     --theme-color: #030712;
-    color-scheme: dark;
     --foreground: 210 40% 98%;
     --card: 224 71% 6%;
     --card-foreground: 210 40% 98%;
