@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { CalendarPlus, CalendarRange, Plus, SearchX } from "lucide-react";
-import { and, eq, ilike, or, type SQL } from "drizzle-orm";
+import { and, eq, ilike, type SQL } from "drizzle-orm";
 import { db } from "@/drizzle/db";
 import { EventTable } from "@/drizzle/schema";
 import EventsList from "@/components/EventsList";
@@ -35,12 +35,9 @@ export default async function EventsPage({
     (await db.$count(EventTable, eq(EventTable.clerkUserId, userId))) > 0;
 
   // Restrict to the user's own events, optionally matching the search query
-  // against the event name or description (case-insensitive).
+  // against the event name (case-insensitive).
   const searchFilter: SQL | undefined = query
-    ? or(
-        ilike(EventTable.name, `%${query}%`),
-        ilike(EventTable.description, `%${query}%`),
-      )
+    ? ilike(EventTable.name, `%${query}%`)
     : undefined;
   const whereClause = and(eq(EventTable.clerkUserId, userId), searchFilter);
 

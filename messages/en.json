@@ -88,7 +88,7 @@
     "clearSelection": "Clear",
     "search": {
       "label": "Search events",
-      "placeholder": "Search events by name or description…",
+      "placeholder": "Search events by name…",
       "clear": "Clear search",
       "noResults": {
         "title": "No matching events",
